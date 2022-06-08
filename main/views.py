@@ -10,12 +10,27 @@ def login_user(request):
         return redirect('/communityboard/')
     else:
         if request.method == 'POST':
+            form = CreateUserForm
             email = request.POST.get('email')
             password = request.POST.get('password')
 
             user = authenticate(request, email=email, password=password)
-            if user is not None:
+            if user is not None: #user exists
                 login(request, user)
                 return redirect('/communityboard/')
+        form = CreateUserForm
+        return render(request, 'login.html', {'form':form})
 
-        return render(request, 'main/login.html')
+def md_register(request):
+    if request.method == 'POST':
+        form = CreateUserForm
+        if(form.is_valid()):
+            form.save()
+    return render(request, 'md_register.html')
+
+def patient_register(request):
+    if request.method == 'POST':
+        form = CreateUserForm
+        if(form.is_valid()):
+            form.save()
+    return render(request, 'patient_register.html')

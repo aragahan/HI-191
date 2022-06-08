@@ -1,3 +1,4 @@
+from pickle import TRUE
 from django import forms
 from django.forms import ModelChoiceField, ModelForm
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
@@ -7,12 +8,12 @@ from .models import *
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = AuthUser
-        fields = ['first_name','last_name','username', 'email', 'password1', 'password2', 'user_type', 'address', 'birthdate', 'contact_no']
+        fields = ['first_name','last_name','username', 'email', 'password', 'user_type', 'address', 'birthdate', 'contact_no']
 
 class EditUserForm(UserChangeForm):
     class Meta:
         model = AuthUser
-        fields = ['first_name','last_name','username', 'email', 'password1', 'password2', 'user_type', 'address', 'birthdate', 'contact_no']
+        fields = ['first_name','last_name','username', 'email', 'password', 'user_type', 'address', 'birthdate', 'contact_no']
 
 class EditPhysicianForm(ModelForm):
     class Meta:
