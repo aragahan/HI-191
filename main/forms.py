@@ -32,4 +32,4 @@ class PrescriptionForm(ModelForm):
 class PatientConsultationRecordForm(ModelForm):
     class Meta:
         model = PatientConsultationRecord
-        fields = ['date']
+        fields = ['status', 'date']
