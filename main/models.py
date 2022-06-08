@@ -34,9 +34,15 @@ class Physician(models.Model):
         return self.physician
 
 class PatientConsultationRecord(models.Model):
+    STATUS = {
+        ('Upcoming', 'Upcoming'),
+        ('Done', 'Done'),
+    }
+
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name='PCR', null=True)
     physician = models.ForeignKey(Physician, on_delete=models.CASCADE, null=True)
     date = models.DateTimeField(auto_now_add=False, null=True, blank=True)
+    status = models.PositiveSmallIntegerField(choices=STATUS,null=True)
 
 class Prescription(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name='prescription', null=True)
