@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST, require_GET
 
 from .forms import *
 from .models import *
@@ -46,12 +48,19 @@ def request_account(request):
     form = RequestAccountForm()
     if request.method == "POST":
         form = RequestAccountForm(request.POST)
+        print("here0")
+        print(request.POST)
         if form.is_valid():
+            print("here")
             instance = form.save(commit=False)
             instance.age = calculate_age(instance.birthdate)
+            instance.password1 = f"{instance.first_name} {instance.last_name}"
+            instance.password2 = f"{instance.first_name} {instance.last_name}"
             instance.is_active = False
             instance.save()
             return redirect("login")
+        else:
+            print("here2")
     data = {"request_account_form": form}
     return render(request, "main/request_account.html", data)
 
