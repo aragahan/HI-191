@@ -1,0 +1,22 @@
+{% extends "main/base.html" %}
+
+{% block title %}Request Account{% endblock title %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+<div class="container d-flex justify-content-center vh-100">
+    <div class="row align-self-center">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Account Request</h5>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {{ request_account_form|crispy }}
+                    <button class="btn btn-primary w-100">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
