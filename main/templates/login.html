@@ -5,10 +5,20 @@
         </style>
     </head>
     <body>
-        login sample
-        {% for x in form %}
-        {{x.label}} {{x}}
-        <br />
+        <form method = "POST" action = "">
+            {% csrf_token %}
+            <label for="emailInput">Email</label>
+            <input type="email" name="email">
+            <label for="passwordInput">Password</label>
+            <input type="password" name="password">
+        </br><input type="submit" value="Log-in">
+        </form>
+
+        {% for message in messages %}
+            {{message}}
         {% endfor %}
+
+        {{form.errors}}
+
     </body>
 </html>

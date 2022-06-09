@@ -1,36 +1,62 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout ,update_session_auth_hash
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
+from django.http import HttpResponse
 
 from .forms import *
 from .models import *
 
 # Create your views here.
-def login_user(request):
+def login_page(request):
     if request.user.is_authenticated:
         return redirect('/communityboard/')
     else:
         if request.method == 'POST':
-            form = CreateUserForm
             email = request.POST.get('email')
             password = request.POST.get('password')
 
+            loguser = AuthUser.objects.get(email=email)
+            if loguser.is_active == False:
+                messages.error(request, "Your account is still inactive.")
+                return redirect('login_page')
+
+            print(email, password)
+
             user = authenticate(request, email=email, password=password)
+
             if user is not None: #user exists
                 login(request, user)
                 return redirect('/communityboard/')
-        form = CreateUserForm
-        return render(request, 'login.html', {'form':form})
+            else:
+                messages.error(request, "Incorrect credentials.")
 
-def md_register(request):
-    if request.method == 'POST':
-        form = CreateUserForm
-        if(form.is_valid()):
-            form.save()
-    return render(request, 'md_register.html')
+        return render(request, 'login.html')
 
-def patient_register(request):
-    if request.method == 'POST':
-        form = CreateUserForm
-        if(form.is_valid()):
-            form.save()
-    return render(request, 'patient_register.html')
+def register_page(request):
+    form = CreateUserForm()
+
+    if request.method == "POST":
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            user = form.save(False)
+            print(form.cleaned_data.get('user_type'))
+            if form.cleaned_data.get('user_type') == 1:
+                user.is_active = False
+                user.save()
+                Physician.objects.create(
+                    physician = user,
+                )
+            elif form.cleaned_data.get('user_type') == 2:
+                user.is_active = False
+                user.save()
+                Patient.objects.create(
+                    patient = user,
+                )
+            messages.success(request, 'Account created!')
+
+            return redirect('login_page')
+    
+    context = {'form': form}
+    return render(request, 'md_register.html', context)
