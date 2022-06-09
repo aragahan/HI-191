@@ -9,8 +9,8 @@ from django.contrib.auth.models import Group
 
 class AuthUser(AbstractUser):
     USER_TYPE_CHOICES = {
-        ('1', 'Physician'),
-        ('2', 'Patient'),
+        (1, 'Physician'),
+        (2, 'Patient'),
     }
 
     user_type = models.PositiveSmallIntegerField(choices=USER_TYPE_CHOICES,null=True)
@@ -19,13 +19,13 @@ class AuthUser(AbstractUser):
     contact_no = models.CharField(max_length=15, null=True, blank=True)
 
     def __str__(self):
-        return self.username
+        return f"{self.first_name} {self.last_name}"
 
 class Patient(models.Model):
     patient = models.ForeignKey(AuthUser, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.patient
+        return self.patient.first_name
 
 class Physician(models.Model):
     physician = models.ForeignKey(AuthUser, on_delete=models.CASCADE, null=True)
@@ -33,7 +33,7 @@ class Physician(models.Model):
     hospital_affiliation = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
-        return self.physician
+        return self.physician.first_name
 
 class PatientConsultationRecord(models.Model):
     STATUS = {

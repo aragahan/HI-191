@@ -4,10 +4,19 @@
     </style>
 </head>
 <body>
-    doctor reg sample
-    {% for x in form %}
-    {{x.label}} {{x}}
-    <br />
-    {% endfor %}
+    <form method = "POST" action = "">
+        {% csrf_token %}
+        {% load crispy_forms_tags %}
+        {{form.first_name | as_crispy_field}}
+        {{form.last_name | as_crispy_field }}
+        {{form.username | as_crispy_field }}
+        {{form.email | as_crispy_field }}
+        {{form.password1 | as_crispy_field }}
+        {{form.password2 | as_crispy_field }}
+        {{form.user_type | as_crispy_field }}
+
+        {{form.errors}}
+        <input type="submit" value="Register">
+    </form>
 </body>
 </html>

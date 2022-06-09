@@ -8,7 +8,7 @@ from .models import *
 class CreateUserForm(UserCreationForm):
     class Meta:
         model = AuthUser
-        fields = ['first_name','last_name','username', 'email', 'password', 'user_type', 'address', 'birthdate', 'contact_no']
+        fields = ['first_name','last_name', 'username', 'email', 'password1', 'password2', 'user_type']
 
 class EditUserForm(UserChangeForm):
     class Meta:
