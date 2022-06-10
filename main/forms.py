@@ -9,17 +9,6 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 from .models import *
 
-<<<<<<< HEAD
-class CreateUserForm(UserCreationForm):
-    class Meta:
-        model = AuthUser
-        fields = ['first_name','last_name', 'username', 'email', 'password1', 'password2', 'user_type']
-
-class EditUserForm(UserChangeForm):
-    class Meta:
-        model = AuthUser
-        fields = ['first_name','last_name','username', 'email', 'password', 'user_type', 'address', 'birthdate', 'contact_no']
-=======
 
 class RequestAccountForm(UserCreationForm):
     password1 = CharField(
@@ -44,7 +33,6 @@ class RequestAccountForm(UserCreationForm):
             }
         )
     )
->>>>>>> 7a6a3394833b7ad4fcdd4a0ebed67a79bc91ae03
 
     class Meta:
         model = Account
