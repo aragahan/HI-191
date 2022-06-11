@@ -29,13 +29,14 @@ def login_user(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, "Login success")
-                # if user.role == "SA":
-                #     return redirect("")
+                if user.role == "SA":
+                    return redirect("/account_requests/")
                 # elif user.role == "PH":
                 #     return redirect("")
                 # elif user.role == "PA":
                 #     return redirect("")
-                return redirect("login")
+                else:
+                    return redirect("login")
             else:
                 messages.error(request, "Invalid username or password")
         else:
@@ -72,3 +73,7 @@ def request_account(request):
 def logout_user(request):
     logout(request)
     return redirect("/")
+
+
+def account_requests(request):
+    return render(request, "main/account_requests.html")

@@ -12,6 +12,7 @@ from .models import *
 
 class RequestAccountForm(UserCreationForm):
     password1 = CharField(
+        label="Password",
         widget=PasswordInput(
             attrs={
                 "type": "password",
@@ -20,9 +21,10 @@ class RequestAccountForm(UserCreationForm):
                 "id": "password1",
                 "required": True,
             }
-        )
+        ),
     )
     password2 = CharField(
+        label="Confirm Password",
         widget=PasswordInput(
             attrs={
                 "type": "password",
@@ -31,7 +33,7 @@ class RequestAccountForm(UserCreationForm):
                 "id": "password2",
                 "required": True,
             }
-        )
+        ),
     )
 
     class Meta:
@@ -126,10 +128,10 @@ class RequestAccountForm(UserCreationForm):
                 Column("role", css_class="col-md-4"),
             ),
             Row(
-                Column("password1", css_class="d-none"),
-                Column("password2", css_class="d-none"),
+                Column("password1", css_class="col-md-6"),
+                Column("password2", css_class="col-md-6"),
             ),
-            Button("submit-button", "Submit", css_class="btn btn-primary"),
+            Submit("submit", "Submit"),
         )
 
 
