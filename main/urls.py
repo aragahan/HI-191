@@ -12,4 +12,7 @@ urlpatterns = [
 
     path('md_landing/', views.md_landing, name='md_landing'),
     path('patient_landing/', views.patient_landing, name='patient_landing'),
+
+    path('doctors/', views.all_doctors_page, name="all_doctors_page"),
+    path('patients/', views.all_patients_page, name="all_patients_page"),
 ]

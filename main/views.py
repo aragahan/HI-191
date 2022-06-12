@@ -83,3 +83,15 @@ def patient_landing(request):
 
 def admin_landing(request):
     return render(request, "main/admin_landing.html", {})
+
+def all_doctors_page(request):
+    doctors = Physician.objects.all()
+
+    context = {"doctors": doctors}
+    return render(request, "main/all_doctors.html", context)
+
+def all_patients_page(request):
+    patients = Patient.objects.all()
+
+    context = {"patients": patients}
+    return render(request, "main/all_patients.html", context)

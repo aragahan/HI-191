@@ -98,7 +98,7 @@ class Physician(models.Model):
     hospital_affiliation = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
-        return self.physician.first_name
+        return self.account.first_name
 
 
 # class PatientConsultationRecord(models.Model):
