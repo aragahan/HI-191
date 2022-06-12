@@ -31,19 +31,6 @@ ALLOWED_HOSTS = []  # Add localhost as allowed host.
 # Application definition
 
 INSTALLED_APPS = [
-<<<<<<< HEAD
-<<<<<<< HEAD
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'main',
-    'crispy_forms',
-=======
-=======
->>>>>>> jm-changes
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -53,10 +40,6 @@ INSTALLED_APPS = [
     "main",
     "crispy_forms",
     "crispy_bootstrap5",
-<<<<<<< HEAD
->>>>>>> 7a6a3394833b7ad4fcdd4a0ebed67a79bc91ae03
-=======
->>>>>>> jm-changes
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"

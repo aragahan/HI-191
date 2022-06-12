@@ -1,20 +1,4 @@
 from distutils.command.upload import upload
-<<<<<<< HEAD
-<<<<<<< HEAD
-from tkinter import CASCADE
-from unittest.util import _MAX_LENGTH
-from django.db import models
-from django.contrib.auth.models import User, AbstractUser
-from django.contrib.auth.models import Group
-
-# Create your models here.
-
-class AuthUser(AbstractUser):
-    USER_TYPE_CHOICES = {
-        (1, 'Physician'),
-        (2, 'Patient'),
-    }
-=======
 from django.db import models
 from django.contrib.auth.models import (
     AbstractBaseUser,
@@ -25,22 +9,6 @@ from django.contrib.auth.models import (
 from django.core.validators import RegexValidator, MaxValueValidator, MinValueValidator
 from django.utils.translation import gettext_lazy as _
 
-# Create your models here.
-
-=======
-from django.db import models
-from django.contrib.auth.models import (
-    AbstractBaseUser,
-    BaseUserManager,
-    PermissionsMixin,
-)
-
-from django.core.validators import RegexValidator, MaxValueValidator, MinValueValidator
-from django.utils.translation import gettext_lazy as _
-
-# Create your models here.
-
->>>>>>> jm-changes
 phone_regex = RegexValidator(
     r"^(09|\+639)\d{9}$",
     message="Phone number must begin with +639 or 09 followed by a 9 digits",
@@ -101,37 +69,20 @@ class Account(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
-<<<<<<< HEAD
->>>>>>> 7a6a3394833b7ad4fcdd4a0ebed67a79bc91ae03
 
     objects = AccountManager()
 
-=======
-
-    objects = AccountManager()
-
->>>>>>> jm-changes
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> jm-changes
 
     def has_perm(self, perm, obj=None):
         return self.is_admin
 
     def has_module_perms(self, app_label):
         return True
-
-<<<<<<< HEAD
->>>>>>> 7a6a3394833b7ad4fcdd4a0ebed67a79bc91ae03
-=======
->>>>>>> jm-changes
 
 class Patient(models.Model):
     account = models.OneToOneField(Account, on_delete=models.CASCADE, null=True)

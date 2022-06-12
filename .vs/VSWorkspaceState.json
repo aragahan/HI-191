@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\main",
-    "\\main\\templates"
+    "\\main\\templates",
+    "\\main\\templates\\main",
+    "\\telemed"
   ],
-  "SelectedNode": "\\main\\forms.py",
+  "SelectedNode": "\\telemed\\settings.py",
   "PreviewInSolutionExplorer": false
 }

@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -29,12 +30,13 @@ def login_user(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, "Login success")
-                # if user.role == "SA":
-                #     return redirect("")
-                # elif user.role == "PH":
-                #     return redirect("")
-                # elif user.role == "PA":
-                #     return redirect("")
+                if user.role == "SA":
+                    return redirect("admin_landing", {'user': user})
+                elif user.role == "PH":
+                    return redirect("md_landing", {'user': user})
+                elif user.role == "PA":
+                    return redirect("patient_landing", {'user': user})
+
                 return redirect("login")
             else:
                 messages.error(request, "Invalid username or password")
@@ -48,10 +50,10 @@ def request_account(request):
     form = RequestAccountForm()
     if request.method == "POST":
         form = RequestAccountForm(request.POST)
-        print("here0")
-        print(request.POST)
+        #print("here0")
+        #print(request.POST)
         if form.is_valid():
-            print("here")
+            #print("here")
             instance = form.save(commit=False)
             instance.age = calculate_age(instance.birthdate)
             instance.password1 = f"{instance.first_name} {instance.last_name}"
@@ -72,3 +74,12 @@ def request_account(request):
 def logout_user(request):
     logout(request)
     return redirect("/")
+
+def md_landing(request):
+    return render(request, "main/md_landing.html", {})
+
+def patient_landing(request):
+    return render(request, "main/patient_landing.html", {})
+
+def admin_landing(request):
+    return render(request, "main/admin_landing.html", {})
