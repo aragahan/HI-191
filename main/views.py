@@ -95,3 +95,9 @@ def all_patients_page(request):
 
     context = {"patients": patients}
     return render(request, "main/all_patients.html", context)
+
+def patient_page(request, id):
+    patient = Patient.objects.get(id=id)
+
+    context = {"patient": patient}
+    return render(request, "main/patient.html", context)

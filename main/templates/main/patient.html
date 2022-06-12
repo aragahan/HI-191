@@ -14,17 +14,20 @@
             {% include 'main/navbar.html' %}
         {% endblock navbar %}
         {% block content %}
-        {% for patient in patients %}
-            <p>
-                {{patient.account.first_name}}
-                {{patient.account.last_name}}
-                {{patient.accoumt.age}}
-                {{patient.account.sex}}
-                {{patient.account.contact_number}}
-                <a href="{% url 'patient_page' patient.id %}">View Patient Profile</a>
-            </p>
+        <p>
+            {{patient.account.first_name}}
+            {{patient.account.last_name}}
+            {{patient.accoumt.age}}
+            {{patient.account.sex}}
+            {{patient.account.contact_number}}
+        </p>
+
+        <p> {{patient.account.first_name}}'s Consultation History </p>
+        {% for cr in patient.PCR.all %}
+            {{cr.physician}}
+            {{cr.date}}
+            {{cr.status}}
         {% endfor %}
-        
         {% endblock content %}
     </div>
 </body>
