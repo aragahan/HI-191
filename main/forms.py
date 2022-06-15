@@ -10,9 +10,32 @@ from django.contrib.auth.models import User
 from .models import *
 
 
-class RequestAccountForm(ModelForm):
+class RequestAccountForm(UserCreationForm):
+    password1 = CharField(
+        widget=PasswordInput(
+            attrs={
+                "type": "password",
+                "class": "form-control",
+                "placeholder": "Password",
+                "id": "password1",
+                "required": True,
+            }
+        )
+    )
+    password2 = CharField(
+        widget=PasswordInput(
+            attrs={
+                "type": "password",
+                "class": "form-control",
+                "placeholder": "Confirm Password",
+                "id": "password2",
+                "required": True,
+            }
+        )
+    )
+
     class Meta:
-        model = AccountRequest
+        model = Account
         fields = [
             "email",
             "first_name",
@@ -21,6 +44,8 @@ class RequestAccountForm(ModelForm):
             "sex",
             "contact_number",
             "role",
+            "password1",
+            "password2",
         ]
         widgets = {
             "first_name": TextInput(
@@ -100,7 +125,11 @@ class RequestAccountForm(ModelForm):
                 Column("sex", css_class="col-md-4"),
                 Column("role", css_class="col-md-4"),
             ),
-            Submit("submit", "Submit"),
+            Row(
+                Column("password1", css_class="d-none"),
+                Column("password2", css_class="d-none"),
+            ),
+            Button("submit-button", "Submit", css_class="btn btn-primary"),
         )
 
 

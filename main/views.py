@@ -1,21 +1,15 @@
-from django.shortcuts import render, redirect, HttpResponse
-from django.contrib import messages
+from multiprocessing import context
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.hashers import make_password
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_GET
-from django.core.mail import EmailMessage
-from django.template.loader import get_template
-from django.db import IntegrityError
-
 
 from .forms import *
 from .models import *
-from .decorators import *
 
 from datetime import date
-import re
 
 
 def calculate_age(born):
@@ -24,9 +18,6 @@ def calculate_age(born):
 
 
 # Create your views here.
-
-
-@unauthenticated_user
 def login_user(request):
     form = AuthenticationForm()
     if request.method == "POST":
@@ -40,11 +31,12 @@ def login_user(request):
                 login(request, user)
                 messages.success(request, "Login success")
                 if user.role == "SA":
-                    return redirect("account_requests")
+                    return redirect("admin_landing", {'user': user})
                 elif user.role == "PH":
-                    return redirect("md_landing", {"user": user})
+                    return redirect("md_landing", {'user': user})
                 elif user.role == "PA":
-                    return redirect("patient_landing", {"user": user})
+                    return redirect("patient_landing", {'user': user})
+
                 return redirect("login")
             else:
                 messages.error(request, "Invalid username or password")
@@ -58,40 +50,21 @@ def request_account(request):
     form = RequestAccountForm()
     if request.method == "POST":
         form = RequestAccountForm(request.POST)
-        print(request.POST)
+        #print("here0")
+        #print(request.POST)
         if form.is_valid():
+            #print("here")
             instance = form.save(commit=False)
             instance.age = calculate_age(instance.birthdate)
+            instance.password1 = f"{instance.first_name} {instance.last_name}"
+            instance.password2 = f"{instance.first_name} {instance.last_name}"
+            instance.is_active = False
             instance.save()
-
-            subject = "Telemedicine App - Re: Account Request"
-            data = {
-                "name": f"{instance.first_name} {instance.last_name}",
-                "role": instance.get_role_display(),
-            }
-            print("Here")
-            message = get_template("main/email/request_account_sent_email.html").render(
-                data
-            )
-
-            msg = EmailMessage(
-                subject,
-                message,
-                "echart.project@gmail.com",
-                to=[instance.email],
-            )
-            msg.content_subtype = "html"
-            msg.send()
-
-            return redirect("/request_account_sent/")
+            return redirect("login")
         else:
-            print(form.errors)
+            print("here2")
     data = {"request_account_form": form}
     return render(request, "main/request_account.html", data)
-
-
-def request_account_sent(request):
-    return render(request, "main/request_account_sent.html")
 
 
 # def reset_password(request):
@@ -102,100 +75,14 @@ def logout_user(request):
     logout(request)
     return redirect("/")
 
-
-def account_requests(request):
-    account_requests = AccountRequest.objects.all()
-    data = {"account_requests": account_requests}
-    return render(request, "main/account_requests.html", data)
-
-
-def account_request_approve(request, pk):
-    account_request = AccountRequest.objects.get(pk=pk)
-    get_pass = re.search(r"\w+(?=@)", account_request.email).group()
-    temp_pass = make_password(get_pass)
-    # Temporary try-catch to handle a duplicate account request being accepted
-    try:
-        account = Account.objects.create(
-            email=account_request.email,
-            first_name=account_request.first_name,
-            last_name=account_request.last_name,
-            birthdate=account_request.birthdate,
-            age=account_request.age,
-            sex=account_request.sex,
-            contact_number=account_request.contact_number,
-            role=account_request.role,
-            password=temp_pass,
-        )
-        account_request.delete()
-
-        subject = "Telemedicine App - Re: Account Request"
-        data = {
-            "name": f"{account.first_name} {account.last_name}",
-            "role": account.get_role_display(),
-            "password": get_pass,
-        }
-        message = get_template("main/email/approve_email.html").render(data)
-        msg = EmailMessage(
-            subject,
-            message,
-            "echart.project@gmail.com",
-            to=[account.email],
-        )
-        msg.content_subtype = "html"
-        msg.send()
-    except IntegrityError as e:
-        return HttpResponse(
-            "Accepting this creates a duplicate. Please deny this account request instead"
-        )
-
-    return redirect("/account_requests/")
-
-
-def account_request_deny(request, pk):
-    account_request = AccountRequest.objects.get(pk=pk)
-    subject = "Telemedicine App - Re: Account Request"
-    data = {
-        "name": f"{account_request.first_name} {account_request.last_name}",
-        "role": account_request.get_role_display(),
-    }
-    message = get_template("main/email/deny_email.html").render(data)
-    msg = EmailMessage(
-        subject,
-        message,
-        "echart.project@gmail.com",
-        to=[account_request.email],
-    )
-    msg.content_subtype = "html"
-    msg.send()
-    account_request.delete()
-    # Send email here
-    return redirect("/account_requests/")
-
-
-def change_is_active(request, pk):
-    account = Account.objects.get(pk=pk)
-    account.is_active = not account.is_active
-    account.save()
-    return redirect("/accounts/")
-
-
-def accounts(request):
-    accounts_list = Account.objects.all()
-    data = {"accounts_list": accounts_list}
-    return render(request, "main/accounts.html", data)
-
-
 def md_landing(request):
     return render(request, "main/md_landing.html", {})
-
 
 def patient_landing(request):
     return render(request, "main/patient_landing.html", {})
 
-
 def admin_landing(request):
     return render(request, "main/admin_landing.html", {})
-
 
 def all_doctors_page(request):
     doctors = Physician.objects.all()
@@ -203,13 +90,11 @@ def all_doctors_page(request):
     context = {"doctors": doctors}
     return render(request, "main/all_doctors.html", context)
 
-
 def all_patients_page(request):
     patients = Patient.objects.all()
 
     context = {"patients": patients}
     return render(request, "main/all_patients.html", context)
-
 
 def patient_page(request, id):
     patient = Patient.objects.get(id=id)
@@ -226,35 +111,29 @@ def patient_page(request, id):
             prescription.patient = patient
             prescription.physician = profile.physician
             prescription.save()
-            return redirect("patient_page", patient.id)
-
+            return redirect('patient_page', patient.id)
+        
         if pcr_form.is_valid():
             pcr = pcr_form.save(False)
             pcr.patient = patient
             pcr.physician = profile.physician
             pcr.save()
-            return redirect("patient_page", patient.id)
-
-    context = {
-        "patient": patient,
-        "profile": profile,
-        "pform": prescription_form,
-        "pcr": pcr_form,
-    }
+            return redirect('patient_page', patient.id)
+        
+    context = {"patient": patient, "profile": profile, "pform": prescription_form, "pcr": pcr_form}
     return render(request, "main/patient.html", context)
-
 
 def profile_page(request):
     profile = request.user
     document_form = DocumentForm()
-
+    
     if request.method == "POST":
         document_form = DocumentForm(request.POST, request.FILES)
         if document_form.is_valid():
             document = document_form.save(False)
             document.patient = profile.patient
             document.save()
-            return redirect("profile_page")
+            return redirect('profile_page')
 
     context = {"profile": profile, "dform": document_form}
     return render(request, "main/profile.html", context)
