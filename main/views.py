@@ -104,6 +104,13 @@ def account_request_deny(request, pk):
     return redirect("/account_requests/")
 
 
+def change_active(request, pk):
+    account = Account.objects.get(pk=pk)
+    account.is_active = not account.is_active
+    account.save()
+    return redirect("/accounts/")
+
+
 def accounts(request):
     accounts_list = Account.objects.all()
     data = {"accounts_list": accounts_list}
