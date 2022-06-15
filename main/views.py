@@ -98,6 +98,42 @@ def all_patients_page(request):
 
 def patient_page(request, id):
     patient = Patient.objects.get(id=id)
+    profile = request.user
+    prescription_form = PrescriptionForm()
+    pcr_form = PatientConsultationRecordForm()
 
-    context = {"patient": patient}
+    if request.method == "POST":
+        prescription_form = PrescriptionForm(request.POST, request.FILES)
+        pcr_form = PatientConsultationRecordForm(request.POST)
+
+        if prescription_form.is_valid():
+            prescription = prescription_form.save(False)
+            prescription.patient = patient
+            prescription.physician = profile.physician
+            prescription.save()
+            return redirect('patient_page', patient.id)
+        
+        if pcr_form.is_valid():
+            pcr = pcr_form.save(False)
+            pcr.patient = patient
+            pcr.physician = profile.physician
+            pcr.save()
+            return redirect('patient_page', patient.id)
+        
+    context = {"patient": patient, "profile": profile, "pform": prescription_form, "pcr": pcr_form}
     return render(request, "main/patient.html", context)
+
+def profile_page(request):
+    profile = request.user
+    document_form = DocumentForm()
+    
+    if request.method == "POST":
+        document_form = DocumentForm(request.POST, request.FILES)
+        if document_form.is_valid():
+            document = document_form.save(False)
+            document.patient = profile.patient
+            document.save()
+            return redirect('profile_page')
+
+    context = {"profile": profile, "dform": document_form}
+    return render(request, "main/profile.html", context)

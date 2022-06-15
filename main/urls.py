@@ -1,4 +1,6 @@
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
@@ -9,6 +11,8 @@ urlpatterns = [
     # i think we can remove these two na? since plano daw ni julius is to combine the register for md and patient
     # path('md_register/', views.md_register, name='md_register'),
     # path('patient_register/', views.patient_register, name='patient_register'),
+    
+    path('profile/', views.profile_page, name='profile_page'),
 
     path('md_landing/', views.md_landing, name='md_landing'),
     path('patient_landing/', views.patient_landing, name='patient_landing'),
@@ -18,3 +22,5 @@ urlpatterns = [
 
     path('patients/<int:id>/', views.patient_page, name="patient_page"),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
