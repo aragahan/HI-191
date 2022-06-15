@@ -125,7 +125,7 @@ class Patient(models.Model):
     account = models.OneToOneField(Account, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.patient.first_name
+        return self.account.first_name
 
 
 class Physician(models.Model):
@@ -134,44 +134,43 @@ class Physician(models.Model):
     hospital_affiliation = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
-        return self.physician.first_name
+        return self.account.first_name
 
 
-# class PatientConsultationRecord(models.Model):
-#     STATUS = {
-#         ("Upcoming", "Upcoming"),
-#         ("Done", "Done"),
-#     }
+class PatientConsultationRecord(models.Model):
+    STATUS = {
+        ("UP", "Upcoming"),
+        ("DN", "Done"),
+    }
 
-#     patient = models.ForeignKey(
-#         Patient, on_delete=models.CASCADE, related_name="PCR", null=True
-#     )
-#     physician = models.ForeignKey(Physician, on_delete=models.CASCADE, null=True)
-#     date = models.DateTimeField(auto_now_add=False, null=True, blank=True)
-#     status = models.PositiveSmallIntegerField(choices=STATUS, null=True)
-
-
-# class Prescription(models.Model):
-#     patient = models.ForeignKey(
-#         Patient, on_delete=models.CASCADE, related_name="prescription", null=True
-#     )
-#     physician = models.ForeignKey(
-#         Physician, on_delete=models.CASCADE, related_name="prescription", null=True
-#     )
-#     file = models.FileField(upload_to="prescriptions/")
+    patient = models.ForeignKey(
+        Patient, on_delete=models.CASCADE, related_name="PCR", null=True
+    )
+    physician = models.ForeignKey(Physician, on_delete=models.CASCADE, null=True)
+    date = models.DateTimeField(auto_now_add=False, null=True, blank=True)
 
 
-# class Consultation(models.Model):
-#     patient = models.ForeignKey(
-#         Patient, on_delete=models.CASCADE, related_name="consultation", null=True
-#     )
-#     physician = models.ForeignKey(
-#         Physician, on_delete=models.CASCADE, related_name="consultation", null=True
-#     )
+class Prescription(models.Model):
+    patient = models.ForeignKey(
+        Patient, on_delete=models.CASCADE, related_name="prescription", null=True
+    )
+    physician = models.ForeignKey(
+        Physician, on_delete=models.CASCADE, related_name="prescription", null=True
+    )
+    file = models.FileField(upload_to="prescriptions/")
 
 
-# class Document(models.Model):
-#     patient = models.ForeignKey(
-#         Patient, on_delete=models.CASCADE, related_name="documents", null=True
-#     )
-#     file = models.FileField(upload_to="documents/")
+class Consultation(models.Model):
+    patient = models.ForeignKey(
+        Patient, on_delete=models.CASCADE, related_name="consultation", null=True
+    )
+    physician = models.ForeignKey(
+        Physician, on_delete=models.CASCADE, related_name="consultation", null=True
+    )
+
+
+class Document(models.Model):
+    patient = models.ForeignKey(
+        Patient, on_delete=models.CASCADE, related_name="documents", null=True
+    )
+    file = models.FileField(upload_to="documents/")

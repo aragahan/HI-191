@@ -119,17 +119,17 @@ class RequestAccountForm(ModelForm):
 #         model = Physician
 #         fields = ['specialization', 'hospital_affiliation']
 
-# class DocumentForm(ModelForm):
-#     class Meta:
-#         model = Document
-#         fields = ['file']
+class DocumentForm(ModelForm):
+    class Meta:
+        model = Document
+        fields = ['file']
 
-# class PrescriptionForm(ModelForm):
-#     class Meta:
-#         model = Prescription
-#         fields = ['file']
+class PrescriptionForm(ModelForm):
+    class Meta:
+        model = Prescription
+        fields = ['file']
 
-# class PatientConsultationRecordForm(ModelForm):
-#     class Meta:
-#         model = PatientConsultationRecord
-#         fields = ['status', 'date']
+class PatientConsultationRecordForm(ModelForm):
+    class Meta:
+        model = PatientConsultationRecord
+        fields = ['date']
