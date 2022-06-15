@@ -1,6 +1,6 @@
-{% extends "main/base.html" %}
+{% extends 'main/base.html' %}
 
-{% block title %}Account Requests{% endblock title %}
+{% block title %}Accounts{% endblock title%}
 
 {% block content %}
 <style>
@@ -13,7 +13,7 @@
 <div class="container h-100 my-5">
 	<div class="row">
 		<div class="col">
-			<h1>Account Requests</h1>
+			<h1>Accounts List</h1>
 			<div class="input-group my-3">
 				<span class="input-group-text">
 					<i class="fa-solid fa-magnifying-glass"></i>
@@ -24,36 +24,30 @@
 				<thead>
 					<tr>
 						<th scope="col">Name</th>
+						<th scope="col">Sex</th>
 						<th scope="col">Email</th>
+						<th scope="col">Birth Date</th>
+						<th scope="col">Age</th>
 						<th scope="col">Role</th>
-						<th colspan="2" scope="col">Action</th>
+						<th scope="col">Is Active</th>
 					</tr>
 				</thead>	
 				<tbody>
-					{% for account in account_requests %}
+					{% for account in accounts_list %}
 						<tr name="results" class="align-middle">
 							<td name="accountname">{{account.first_name}} {{account.last_name}}</td>
+							<td>{{account.sex}}</td>
 							<td>{{account.email}}</td>
+							<td>{{account.birthdate}}</td>
+							<td>{{account.age}}</td>
 							<td>{{account.get_role_display}}</td>
 							<td class="fit">
-								<a class="btn btn-success" href="{% url 'account_request_approve' account.pk %}">
-									<i class="fa-solid fa-check"></i>
-									Accept
-								</a>
-							</td>
-							<td class="fit">
-								<a class="btn btn-danger" href="{% url 'account_request_deny' account.pk %}">
-									<i class="fa-solid fa-x"></i>
-									Deny
+								<a href="{% url 'change_is_active' account.pk %}" class="btn btn-{% if account.is_active %}success{% else %}danger{% endif %} d-block">
+									{% if account.is_active %}Active{% else %}Inactive{% endif %}
 								</a>
 							</td>
 						</tr>
 					{% empty %}
-						<tr>
-							<td colspan="5" class="text-center">
-								No account requests found
-							</td>
-						</tr>
 					{% endfor %}
 				</tbody>
 			</table>			
@@ -65,7 +59,7 @@
         console.log(document.querySelector("#filter").value)
         let filter = document.getElementById("filter").value.toUpperCase();
         let results = document.getElementsByName("results");
-		if (results !== null) {
+		if (results.length !== null) {
 			for (let i=0; i<(results.length); i++) {
 				let name = results[i].querySelector("[name=accountname]").innerText;
 				if (name.toUpperCase().includes(filter)){
