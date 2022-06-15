@@ -148,7 +148,7 @@ EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "echart.project@gmail.com"
-EMAIL_HOST_PASSWORD = "pjpszsvpuqalcfse"
+EMAIL_HOST_PASSWORD = "qksCBPu@if]7.Zo-3gYi"
 
 FROALA_UPLOAD_PATH = "/media/images/"
 

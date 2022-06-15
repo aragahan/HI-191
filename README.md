@@ -23,8 +23,8 @@ HI 191 Project
  - [ ]  Upload prescription
 
 ## System Administrator:
- - [x]  Approve request for accounts (patient or physician account)
- - [x]  Deactivate an account
+ - [ ]  Approve request for accounts (patient or physician account)
+ - [ ]  Deactivate an account
 
 *to help on video conferencing app in python: https://eazydevelop.com/2020/08/16/build-a-video-conferencing-app-in-15-minutes/*
 
