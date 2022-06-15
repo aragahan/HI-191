@@ -4,10 +4,11 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST, require_GET
-from django.db.models import F
+
 
 from .forms import *
 from .models import *
+from .decorators import *
 
 from datetime import date
 import re
@@ -19,6 +20,9 @@ def calculate_age(born):
 
 
 # Create your views here.
+
+
+@unauthenticated_user
 def login_user(request):
     form = AuthenticationForm()
     if request.method == "POST":
