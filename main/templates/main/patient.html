@@ -1,6 +1,9 @@
+{% extends 'main/base.html' %}
+
 <!DOCTYPE html>
 <html lang="en" class="h-100">
     {% load crispy_forms_tags %}
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,27 +12,63 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>{% block title %}{% endblock title %}</title>
 </head>
+
 <body class="h-100">
     <div class="d-flex flex-column h-100">
         {% block navbar %}
             {% include 'main/navbar.html' %}
         {% endblock navbar %}
-        {% block content %}
-        <p>First name: {{patient.account.first_name}}</p>
-        <p>Last name: {{patient.account.last_name}}</p>
-        <p>Birthday: {{patient.account.birthdate}}</p>
-        <p>Age: {{patient.account.age}}</p>
-        <p>Sex: {{patient.account.sex}}</p>
-        <p>Contact number: {{patient.account.contact_number}}</p>
 
-        <h5> {{patient.account.first_name}}'s Documents </h5>
+        {% block content %}
+        <div>
+            <div class="row">
+                <div class="col">
+                    <p>First name: {{patient.account.first_name}}</p>
+                </div>
+
+                <div class="col">
+                    <p>Age: {{patient.account.age}}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <p>Last name: {{patient.account.last_name}}</p>
+                </div>
+
+                <div class="col">
+                    <p>Sex: {{patient.account.sex}}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <p>Birthday: {{patient.account.birthdate}}</p>
+                </div>
+
+                <div class="col">
+                    <p>Contact number: {{patient.account.contact_number}}</p>
+                </div>
+            </div>
+        </div>
+
+        <br/>
+        <br/>
+        <br/>
+
+        <h5> {{patient.account.first_name}} {{patient.account.last_name}}'s Documents </h5>
             {% for d in patient.documents.all %}
                 <p>{{d.file}} <a href="{{d.file.url}}" target="_blank">Download document</a></p>
             {% empty %}
                 <p> No documents </p>
             {% endfor %}
+        
+        <br/>
+        <br/>
+        <br/>
 
-        <h5> {{patient.account.first_name}}'s Prescriptions </h5>
+
+        <h5> {{patient.account.first_name}} {{patient.account.last_name}}'s Prescriptions </h5>
             {% for p in patient.prescription.all %}
                 <p>{{p.file}} <a href="{{p.file.url}}" target="_blank">Download prescription</a></p>
             {% empty %}
@@ -45,7 +84,11 @@
             </form>
         {% endif %}
 
-        <h5> {{patient.account.first_name}}'s Consultation History </h5>
+        <br/>
+        <br/>
+        <br/>
+
+        <h5> {{patient.account.first_name}}{{patient.account.last_name}}'s Consultation History </h5>
         {% for cr in patient.PCR.all %}
             <p>
                 {{cr.physician}}
