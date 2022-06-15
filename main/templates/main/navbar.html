@@ -16,9 +16,9 @@
             {% endcomment %}
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link {% if request.user.role =='SA' or request.user.role =='PH' or if request.user.role =='PA'%} active" 
+                    <a class="nav-link active" 
                     aria-current="page" 
-                    href="{% if request.user.role =='SA' %}{% url 'admin_landing' %}{% elif request.user.role =='PH' %}{% url 'md_landing' %}{% else %}{% url 'patient_landing' %}">Home</a>
+                    href="#">Home</a>
                 </li>
 
                 <li class="nav-item">
