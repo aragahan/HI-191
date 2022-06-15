@@ -3,6 +3,13 @@
 {% block title %}Accounts{% endblock title%}
 
 {% block content %}
+<style>
+	.table td.fit, 
+	.table th.fit {
+		white-space: nowrap;
+		width: 1%;
+	}
+</style>
 <div class="container h-100 my-5">
 	<div class="row">
 		<div class="col">
@@ -11,7 +18,10 @@
 				<thead>
 					<tr class="align-middle">
 						<th scope="col">Name</th>
+						<th scope="col">Sex</th>
 						<th scope="col">Email</th>
+						<th scope="col">Birth Date</th>
+						<th scope="col">Age</th>
 						<th scope="col">Role</th>
 						<th scope="col">Is Active</th>
 					</tr>
@@ -20,9 +30,16 @@
 					{% for account in accounts_list %}
 						<tr>
 							<td>{{account.first_name}} {{account.last_name}}</td>
+							<td>{{account.sex}}</td>
 							<td>{{account.email}}</td>
+							<td>{{account.birthdate}}</td>
+							<td>{{account.age}}</td>
 							<td>{{account.get_role_display}}</td>
-							<td>{{account.is_active}}</td>
+							<td class="fit">
+								<a href="{% url 'change_is_active' account.pk %}" class="btn btn-{% if account.is_active %}success{% else %}danger{% endif %} d-block">
+									{% if account.is_active %}Active{% else %}Inactive{% endif %}
+								</a>
+							</td>
 						</tr>
 					{% empty %}
 					{% endfor %}

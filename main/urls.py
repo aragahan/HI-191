@@ -16,6 +16,7 @@ urlpatterns = [
         views.account_request_deny,
         name="account_request_deny",
     ),
+    path("change_is_active/<int:pk>", views.change_is_active, name="change_is_active"),
     path("accounts/", views.accounts, name="accounts"),
     # path('md_register/', views.md_register, name='md_register'),
     # path('patient_register/', views.patient_register, name='patient_register'),
