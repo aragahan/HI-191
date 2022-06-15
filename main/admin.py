@@ -3,12 +3,6 @@ from django.contrib.auth.admin import UserAdmin
 from .models import *
 
 # Register your models here.
-admin.site.register(Patient)
-admin.site.register(Physician)
-# admin.site.register(PatientConsultationRecord)
-# admin.site.register(Prescription)
-# admin.site.register(Consultation)
-# admin.site.register(Document)
 class AccountAdmin(UserAdmin):
     ordering = ("email",)
     list_display = (
@@ -71,8 +65,9 @@ class AccountAdmin(UserAdmin):
             "Important dates",
             {
                 "fields": (
-                    "last_login",
+                    "last_modified",
                     "date_joined",
+                    "last_login",
                 )
             },
         ),
@@ -92,4 +87,11 @@ class AccountAdmin(UserAdmin):
     )
 
 
+admin.site.register(AccountRequest)
 admin.site.register(Account, AccountAdmin)
+admin.site.register(Patient)
+admin.site.register(Physician)
+# admin.site.register(PatientConsultationRecord)
+# admin.site.register(Prescription)
+# admin.site.register(Consultation)
+# admin.site.register(Document)
