@@ -65,7 +65,6 @@ class AccountAdmin(UserAdmin):
             "Important dates",
             {
                 "fields": (
-                    "last_modified",
                     "date_joined",
                     "last_login",
                 )

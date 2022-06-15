@@ -46,6 +46,9 @@ class AccountRequest(models.Model):
         ],
     )
 
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+
 
 # Account Manger and Account model used to modify base User Model
 # it is used to change login from username to email

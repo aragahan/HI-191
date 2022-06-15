@@ -6,10 +6,10 @@ def unauthenticated_user(view_func):
         if request.user.is_authenticated:
             if request.user.role == "SA":
                 return redirect("/account_requests/")
-            elif request.user.role == "PH":
-                return redirect("")
+            # elif request.user.role == "PH":
+            #     return redirect("login")
             else:
-                return redirect("")
+                return view_func(request, *args, **kwargs)
         else:
             return view_func(request, *args, **kwargs)
 
