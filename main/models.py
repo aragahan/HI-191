@@ -138,3 +138,11 @@ class Document(models.Model):
         Patient, on_delete=models.CASCADE, related_name="documents", null=True
     )
     file = models.FileField(upload_to="documents/")
+
+class RoomMember(models.Model):
+    name = models.CharField(max_length=200)
+    uid = models.CharField(max_length=200)
+    room_name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
