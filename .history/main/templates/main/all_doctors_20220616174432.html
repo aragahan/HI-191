@@ -19,7 +19,7 @@
         <div class="container h-100 my-5">
             <div class="row">
                 <div class="col">
-                    <h1>Patients Registered</h1>
+                    <h1>Account Requests</h1>
                     <div class="input-group my-3">
                         <span class="input-group-text">
                             <i class="fa-solid fa-magnifying-glass"></i>
@@ -29,34 +29,35 @@
                     <table class="table table-striped table-hover my-3 rounded-3">
                         <thead>
                             <tr>
-                                <th scope="col">Full Name</th>
-                                <th scope="col">Age</th>
-                                <th scope="col">Sex</th>
-                                <th scope="col">Contact Number</th>
-                                <th scope="col">Patient Info</th>
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">Specialization</th>
+                                <th colspan="2" scope="col">Affiliation</th>
                             </tr>
                         </thead>	
                         <tbody>
-                            {% for patient in patients %}
+                            {% for doctor in doctors %}
                                 <tr name="results" class="align-middle">
-                                    <td name="patientFname">{{patient.first_name}} {{patient.last_name}}</td>
-                                    <td>
-                                        {{patient.age}}
+                                    <td name="accountname">{{account.first_name}} {{account.last_name}}</td>
+                                    <td>{{account.email}}</td>
+                                    <td>{{account.get_role_display}}</td>
+                                    <td class="fit">
+                                        <a class="btn btn-success" href="{% url 'account_request_approve' account.pk %}">
+                                            <i class="fa-solid fa-check"></i>
+                                            Accept
+                                        </a>
                                     </td>
-                                    <td>
-                                        {{patient.sex}}
-                                    </td>
-                                    <td>
-                                        {{patient.contact_number}}
-                                    </td>
-                                    <td>
-                                        <a href="{% url 'patient_page' patient.id %}">View Patient Profile</a>
+                                    <td class="fit">
+                                        <a class="btn btn-danger" href="{% url 'account_request_deny' account.pk %}">
+                                            <i class="fa-solid fa-x"></i>
+                                            Deny
+                                        </a>
                                     </td>
                                 </tr>
                             {% empty %}
                                 <tr>
                                     <td colspan="5" class="text-center">
-                                        No patients registered
+                                        No account requests found
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -65,27 +66,19 @@
                 </div>
             </div>
         </div>
+
+
+
+        {% for doctor in doctors %}
+            <p>
+                {{doctor.first_name}}
+                {{doctor.last_name}}
+                {{doctor.specialization}}
+                {{doctor.hospital_affiliation}}
+            </p>
+        {% endfor %}
         
         {% endblock content %}
     </div>
-    <script>
-        function search() {
-            console.log(document.querySelector("#filter").value)
-            let filter = document.getElementById("filter").value.toUpperCase();
-            let results = document.getElementsByName("results");
-            if (results !== null) {
-                for (let i=0; i<(results.length); i++) {
-                    let name = results[i].querySelector("[name=patientFname]").innerText;
-                    if (name.toUpperCase().includes(filter)){
-                        results[i].style.display = "";
-                    } else {
-                        results[i].style.display = "none";
-                    } 
-                }
-            }
-        }
-    </script>
-
 </body>
 </html>
-
