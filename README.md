@@ -4,8 +4,8 @@ HI 191 Project
 
 ## Patient:
  - [ ]  View information about the application, doctors (name, specialization, hospital affiliations, cellphone) 
- - [ ]  Register as patient
- - [ ]  Login to system
+ - [x]  Register as patient
+ - [x]  Login to system
  - [ ]  Consult with doctor via video chat
  - [ ]  Upload documents (ex. patient lab results)
  - [ ]  Download documents (ex. prescriptions, lab requests)
@@ -14,8 +14,8 @@ HI 191 Project
 
 ## Physician:
  - [ ]  View information about the application, doctors (name, specialization, hospital affiliations) 
- - [ ]  Register as physician
- - [ ]  Login to system
+ - [x]  Register as physician
+ - [x]  Login to system
  - [ ]  Consult with patient via video chat
  - [ ]  View previous consultations of patients under his care
  - [ ]  Add new patient consultation record
@@ -23,8 +23,8 @@ HI 191 Project
  - [ ]  Upload prescription
 
 ## System Administrator:
- - [ ]  Approve request for accounts (patient or physician account)
- - [ ]  Deactivate an account
+ - [x]  Approve request for accounts (patient or physician account)
+ - [x]  Deactivate an account
 
 *to help on video conferencing app in python: https://eazydevelop.com/2020/08/16/build-a-video-conferencing-app-in-15-minutes/*
 

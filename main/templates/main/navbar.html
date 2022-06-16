@@ -11,9 +11,16 @@
         <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            {% comment %}
-				Insert conditionals here to only display navigation for each role 
-            {% endcomment %}
+			{% if request.user.role == "SA" %}
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+					<a class="nav-link {% if request.resolver_match.view_name == 'account_requests' %}active{% endif %}" aria-current="page" href="{% url 'account_requests' %}">Account Requests</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.view_name == 'accounts' %}active{% endif %}" href="{% url 'accounts' %}">Accounts</a>
+                </li>
+            </ul>
+			{% else %}
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     {% if user.role == "SA" %}
@@ -49,6 +56,7 @@
                     <a class="nav-link disabled">Disabled</a>
                 </li>
             </ul>
+			{% endif %}
         </div>
     </div>
     {% endif %}

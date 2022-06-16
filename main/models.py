@@ -9,10 +9,46 @@ from django.contrib.auth.models import (
 from django.core.validators import RegexValidator, MaxValueValidator, MinValueValidator
 from django.utils.translation import gettext_lazy as _
 
+# Create your models here.
+
 phone_regex = RegexValidator(
     r"^(09|\+639)\d{9}$",
     message="Phone number must begin with +639 or 09 followed by a 9 digits",
 )
+
+
+class AccountRequest(models.Model):
+    email = models.EmailField(verbose_name="email", max_length=225)
+    first_name = models.CharField(
+        verbose_name="first name", max_length=225, null=True, blank=True
+    )
+    last_name = models.CharField(
+        verbose_name="last name", max_length=225, null=True, blank=True
+    )
+    birthdate = models.DateField(auto_now_add=False, null=True, blank=True)
+    age = models.PositiveSmallIntegerField(
+        null=True,
+        blank=False,
+        validators=[MaxValueValidator(200), MinValueValidator(0)],
+    )
+    sex = models.CharField(
+        max_length=1, choices=[("M", "Male"), ("F", "Female")], null=True, blank=True
+    )
+    contact_number = models.CharField(
+        max_length=13, validators=[phone_regex], null=True, blank=True
+    )
+    role = models.CharField(
+        verbose_name="role",
+        max_length=2,
+        choices=[
+            ("PH", "Physician"),
+            ("PA", "Patient"),
+        ],
+    )
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+
 
 # Account Manger and Account model used to modify base User Model
 # it is used to change login from username to email
@@ -84,12 +120,12 @@ class Account(AbstractBaseUser, PermissionsMixin):
     def has_module_perms(self, app_label):
         return True
 
+
 class Patient(models.Model):
     account = models.OneToOneField(Account, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.account.first_name
-
 
 
 class Physician(models.Model):
