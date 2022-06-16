@@ -137,3 +137,9 @@ def profile_page(request):
 
     context = {"profile": profile, "dform": document_form}
     return render(request, "main/profile.html", context)
+
+def lobby(request):
+    return render(request, 'main/lobby.html')
+
+def room(request):
+    return render(request, "main/room.html")
