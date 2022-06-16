@@ -32,6 +32,27 @@ urlpatterns = [
     path("doctors/", views.all_doctors_page, name="all_doctors_page"),
     path("patients/", views.all_patients_page, name="all_patients_page"),
     path("patients/<int:id>/", views.patient_page, name="patient_page"),
+    
+    path('profile/', views.profile_page, name='profile_page'),
+
+    path('md_landing/', views.md_landing, name='md_landing'),
+    path('patient_landing/', views.patient_landing, name='patient_landing'),
+
+    path('doctors/', views.all_doctors_page, name="all_doctors_page"),
+    path('patients/', views.all_patients_page, name="all_patients_page"),
+
+    path('patients/<int:id>/', views.patient_page, name="patient_page"),
+
+    path('lobby/', views.lobby),
+    path('room/', views.room),
+
+    path('get_token/', views.getToken),
+    path('create_member/', views.createMember),
+    path('get_member/', views.getMember),
+    path('delete_member/', views.deleteMember),
+    path('account_requests/', views.account_requests, name='account_requests'),
+    path('all_patients/', views.all_patients_page, name="all_patients"),
+    path('all_doctors/', views.all_doctors_page, name="all_doctors"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

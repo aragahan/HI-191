@@ -57,6 +57,29 @@
 					{% endfor %}
 				</tbody>
 			</table>			
+        <!--
+			<table>
+				<tr>
+					<th>Full Name</th>
+					<th>Email Address</th>
+					<th>Role</th>
+				</tr>
+				{% for x in list %}
+					<tr>
+						<td>{{x}}</td>
+						<td>{{x.email}}</td>
+						<td>{% if x.role == "PH"%}
+							Physician
+							{% elif x.role == "PA" %}
+							Patient
+							{% else %}
+							{{x.role}}
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			</table>
+      -->
 		</div>
 	</div>
 </div>

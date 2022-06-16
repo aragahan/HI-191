@@ -1,0 +1,18 @@
+{% extends "main/base.html" %}
+
+{% block title %}Account Requests{% endblock title %}
+
+{% block content %}
+<div class="container d-flex flex-row h-100">
+	<div class="row">
+		<div class="col">
+			<h1>Account Requests</h1>
+			<table>
+				{% for x in list %}
+					{{x}}
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock content %}
