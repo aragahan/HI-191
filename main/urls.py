@@ -23,7 +23,12 @@ urlpatterns = [
     path('patients/<int:id>/', views.patient_page, name="patient_page"),
 
     path('lobby/', views.lobby),
-    path('room/', views.room)
+    path('room/', views.room),
+
+    path('get_token/', views.getToken),
+    path('create_member/', views.createMember),
+    path('get_member/', views.getMember),
+    path('delete_member/', views.deleteMember),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
