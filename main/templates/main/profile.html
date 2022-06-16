@@ -100,6 +100,14 @@
                 {{dform.file | as_crispy_field}}
                 <button type = "Submit"> Submit </button>
             </form>
+        {% elif profile.role == "PH" %}
+            <h5>Edit Details</h5>
+            <form method = "POST" action = "">
+                {% csrf_token %}
+                {{pform.specialization | as_crispy_field}}
+                {{pform.hospital_affiliation | as_crispy_field}}
+                <button type = "Submit"> Submit </button>
+            </form>
         {% endif %}
         {% endblock content %}
     </div>
