@@ -7,25 +7,16 @@
 	<div class="row">
 		<div class="col">
 			<h1>Account Requests</h1>
-			<table>
+			<table style="background-color: gray;">
 				<tr>
 					<th>Full Name</th>
-					<th>Email Address</th>
-					<th>Role</th>
+					<th></th>
+					<th></th>
 				</tr>
 				{% for x in list %}
-					<tr>
-						<td>{{x}}</td>
-						<td>{{x.email}}</td>
-						<td>{% if x.role == "PH"%}
-							Physician
-							{% elif x.role == "PA" %}
-							Patient
-							{% else %}
-							{{x.role}}
-							{% endif %}
-						</td>
-					</tr>
+					<td>
+						{{x}}
+					</td>
 				{% endfor %}
 			</table>
 		</div>

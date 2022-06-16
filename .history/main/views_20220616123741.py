@@ -205,6 +205,6 @@ def deleteMember(request):
     return JsonResponse('Member was deleted', safe=False)
 
 def account_requests(request):
-    req_list = Account.objects.filter(is_active = False)
-    context = {'user':request.user, 'list':req_list}
+    req_list = Account.objects.filter(Account.is_active = "true")
+    context = {'user':request.user}
     return render(request, "main/account_requests.html", context)

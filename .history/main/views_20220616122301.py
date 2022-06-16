@@ -42,7 +42,7 @@ def login_user(request):
                 elif user.role == "PH":
                     return redirect("all_patients")
                 elif user.role == "PA":
-                    return redirect("all_doctors")
+                    return redirect("lobby", {'user': user})
                 else:
                     return redirect("/admin", {'user':user})
 
@@ -205,6 +205,5 @@ def deleteMember(request):
     return JsonResponse('Member was deleted', safe=False)
 
 def account_requests(request):
-    req_list = Account.objects.filter(is_active = False)
-    context = {'user':request.user, 'list':req_list}
+    context = {'user':request.user}
     return render(request, "main/account_requests.html", context)

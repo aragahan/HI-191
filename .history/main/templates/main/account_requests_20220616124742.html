@@ -17,14 +17,7 @@
 					<tr>
 						<td>{{x}}</td>
 						<td>{{x.email}}</td>
-						<td>{% if x.role == "PH"%}
-							Physician
-							{% elif x.role == "PA" %}
-							Patient
-							{% else %}
-							{{x.role}}
-							{% endif %}
-						</td>
+						<td>{{x.role}}</td>
 					</tr>
 				{% endfor %}
 			</table>
