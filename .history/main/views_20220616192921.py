@@ -153,7 +153,7 @@ def account_request_approve(request, pk):
         msg.send()
 
         if(account.role == "PA"):
-            Patient.objects.create(account=account)
+            Patient.objects.create(account=account.id)
 
     except IntegrityError as e:
         return HttpResponse(
@@ -206,7 +206,10 @@ def all_doctors_page(request):
 
 def all_patients_page(request):
     patients = Patient.objects.all()
-    context = {"patients": patients}
+    patient_accounts = []
+    for p in patients:
+        patient_accounts.append(p.account)
+    context = {"patient_list": patients, "patient":patient_accounts}
     return render(request, "main/all_patients.html", context)
 
 

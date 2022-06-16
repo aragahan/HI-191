@@ -117,6 +117,11 @@ class RequestAccountForm(ModelForm):
 class EditPhysicianForm(ModelForm):
     class Meta:
         model = Physician
+        fields = ['age', 'sex', 'contact_number']
+
+class EditPatientForm(ModelForm):
+    class Meta:
+        model = Patient
         fields = ['specialization', 'hospital_affiliation']
 
 class DocumentForm(ModelForm):

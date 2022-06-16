@@ -39,15 +39,15 @@
                         <tbody>
                             {% for patient in patients %}
                                 <tr name="results" class="align-middle">
-                                    <td name="patientFname">{{patient.account.first_name}} {{patient.account.last_name}}</td>
+                                    <td name="patientFname">{{patient.first_name}} {{patient.last_name}}</td>
                                     <td>
-                                        {{patient.account.age}}
+                                        {{patient.age}}
                                     </td>
                                     <td>
-                                        {{patient.account.sex}}
+                                        {{patient.sex}}
                                     </td>
                                     <td>
-                                        {{patient.account.contact_number}}
+                                        {{patient.contact_number}}
                                     </td>
                                     <td>
                                         <a href="{% url 'patient_page' patient.id %}">View Patient Profile</a>

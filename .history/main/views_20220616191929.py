@@ -148,13 +148,8 @@ def account_request_approve(request, pk):
             "echart.project@gmail.com",
             to=[account.email],
         )
-
         msg.content_subtype = "html"
         msg.send()
-
-        if(account.role == "PA"):
-            Patient.objects.create(account=account)
-
     except IntegrityError as e:
         return HttpResponse(
             "Accepting this creates a duplicate. Please deny this account request instead"
@@ -206,6 +201,7 @@ def all_doctors_page(request):
 
 def all_patients_page(request):
     patients = Patient.objects.all()
+
     context = {"patients": patients}
     return render(request, "main/all_patients.html", context)
 
@@ -247,6 +243,7 @@ def profile_page(request):
     profile = request.user
     document_form = DocumentForm()
     doctor_form = EditPhysicianForm()
+    patient_form = EditPatientForm()
 
     if request.method == "POST":
         document_form = DocumentForm(request.POST, request.FILES)

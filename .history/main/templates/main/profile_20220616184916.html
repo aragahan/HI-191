@@ -27,7 +27,6 @@
         <div class="card rounded-3" style="width: 75rem; margin:auto;">
             <div class="card-body">
                 <div class="row">
-                    <h5 style="text-align:center;"> {{profile.first_name}} {{profile.last_name}}'s Personal Details </h5>
                     <div class="col">
                         <p>Email: {{profile.email}}</p>
                     </div>
@@ -100,27 +99,22 @@
         <br/>
         <br/>
 
-        <div class="card rounded-3" style="width: 75rem; margin: auto;">
-            <div class="card-body">
-                {% if profile.role == "PA" %}
-                    <h5>Document Upload</h5>
-                    <form method = "POST" action = "" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{dform.file | as_crispy_field}}
-                        <button type = "Submit"> Submit </button>
-                    </form>
-                    {% elif profile.role == "PH" %}
-                    <h5>Edit Details</h5>
-                    <form method = "POST" action = "">
-                        {% csrf_token %}
-                        {{pform.specialization | as_crispy_field}}
-                        {{pform.hospital_affiliation | as_crispy_field}}
-                        <button type = "Submit"> Submit </button>
-                    </form>
-                {% endif %}
-            </div>
-        </div>
-
+        {% if profile.role == "PA" %}
+            <h5>Document Upload</h5>
+            <form method = "POST" action = "" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{dform.file | as_crispy_field}}
+                <button type = "Submit"> Submit </button>
+            </form>
+        {% elif profile.role == "PH" %}
+            <h5>Edit Details</h5>
+            <form method = "POST" action = "">
+                {% csrf_token %}
+                {{pform.specialization | as_crispy_field}}
+                {{pform.hospital_affiliation | as_crispy_field}}
+                <button type = "Submit"> Submit </button>
+            </form>
+        {% endif %}
         {% endblock content %}
     </div>
 </body>
