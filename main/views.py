@@ -52,7 +52,7 @@ def login_user(request):
                 elif user.role == "PA":
                     return redirect("all_doctors")
                 else:
-                    return redirect("/admin", {'user':user})
+                    return redirect("/admin", {"user": user})
             else:
                 messages.error(request, "Invalid username or password")
         else:
@@ -266,40 +266,45 @@ def profile_page(request):
     context = {"profile": profile, "dform": document_form, "pform": doctor_form}
     return render(request, "main/profile.html", context)
 
+
 def lobby(request):
-    return render(request, 'main/lobby.html')
+    return render(request, "main/lobby.html")
+
 
 def room(request):
     return render(request, "main/room.html")
 
+
 def getToken(request):
-    appId = 'ab463b2c13cc40279dd71e7181ba55af'
-    appCertificate = '74b688a4e2ab4d5895b987e4eabadcef'
-    channelName = request.GET.get('channel')
+    appId = "ab463b2c13cc40279dd71e7181ba55af"
+    appCertificate = "74b688a4e2ab4d5895b987e4eabadcef"
+    channelName = request.GET.get("channel")
     uid = random.randint(1, 230)
     expirationTimeInSeconds = 3600 * 24
     currentTimeStamp = time.time()
     privilegeExpiredTs = currentTimeStamp + expirationTimeInSeconds
-    role =  1
+    role = 1
 
-    token = RtcTokenBuilder.buildTokenWithUid(appId, appCertificate, channelName, uid, role, privilegeExpiredTs)
-    return JsonResponse({'token': token, 'uid': uid}, safe=False)
+    token = RtcTokenBuilder.buildTokenWithUid(
+        appId, appCertificate, channelName, uid, role, privilegeExpiredTs
+    )
+    return JsonResponse({"token": token, "uid": uid}, safe=False)
+
 
 @csrf_exempt
 def createMember(request):
     data = json.loads(request.body)
 
     member, created = RoomMember.objects.get_or_create(
-        name=data['name'],
-        uid=data['UID'],
-        room_name=data['room_name']
+        name=data["name"], uid=data["UID"], room_name=data["room_name"]
     )
 
-    return JsonResponse({'name': data['name']}, safe=False)
+    return JsonResponse({"name": data["name"]}, safe=False)
+
 
 def getMember(request):
-    uid = request.GET.get('UID')
-    room_name = request.GET.get('room_name')
+    uid = request.GET.get("UID")
+    room_name = request.GET.get("room_name")
 
     member = RoomMember.objects.get(
         uid=uid,
@@ -307,25 +312,25 @@ def getMember(request):
     )
 
     name = member.name
-    return JsonResponse({'name': member.name}, safe=False)
+    return JsonResponse({"name": member.name}, safe=False)
+
 
 @csrf_exempt
 def deleteMember(request):
     data = json.loads(request.body)
 
     member = RoomMember.objects.get(
-        name=data['name'],
-        uid=data['UID'],
-        room_name=data['room_name']
-    )   
+        name=data["name"], uid=data["UID"], room_name=data["room_name"]
+    )
 
     member.delete()
 
-    return JsonResponse('Member was deleted', safe=False)
+    return JsonResponse("Member was deleted", safe=False)
 
-'''
+
+"""
 def account_requests(request):
     req_list = Account.objects.filter(is_active = False)
     context = {'user':request.user, 'list':req_list}
     return render(request, "main/account_requests.html", context)
-'''
+"""

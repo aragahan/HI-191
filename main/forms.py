@@ -53,7 +53,7 @@ class RequestAccountForm(ModelForm):
                     "type": "date",
                     "class": "form-control",
                     "id": "birthdate",
-                    "placeholder": "Birthdate",
+                    "placeholder": "mm/dd/yyyy",
                     "required": True,
                 }
             ),
@@ -119,17 +119,20 @@ class EditPhysicianForm(ModelForm):
         model = Physician
         fields = ['specialization', 'hospital_affiliation']
 
+
 class DocumentForm(ModelForm):
     class Meta:
         model = Document
-        fields = ['file']
+        fields = ["file"]
+
 
 class PrescriptionForm(ModelForm):
     class Meta:
         model = Prescription
-        fields = ['file']
+        fields = ["file"]
+
 
 class PatientConsultationRecordForm(ModelForm):
     class Meta:
         model = PatientConsultationRecord
-        fields = ['date']
+        fields = ["date"]
