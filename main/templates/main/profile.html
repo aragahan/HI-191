@@ -24,69 +24,75 @@
 
         <br/>
 
-        <div>
-            <div class="row">
-                <div class="col">
-                    <p>Email: {{profile.email}}</p>
+        <div class="card rounded-3" style="width: 75rem; margin:auto;">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <p>Email: {{profile.email}}</p>
+                    </div>
+    
+                    <div class="col">
+                        <p>Age: {{profile.age}}</p>
+                    </div>
                 </div>
-
-                <div class="col">
-                    <p>Age: {{profile.age}}</p>
+    
+                <div class="row">
+                    <div class="col">
+                        <p>First name: {{profile.first_name}}</p>
+                    </div>
+    
+                    <div class="col">
+                        <p>Sex: {{profile.sex}}</p>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="col">
+                        <p>Last name: {{profile.last_name}}</p>
+                    </div>
+    
+                    <div class="col">
+                        <p>Contact number: {{profile.contact_number}}</p>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="col">
+                        <p>Birthday: {{profile.birthdate}}</p>
+                    </div>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col">
-                    <p>First name: {{profile.first_name}}</p>
-                </div>
-
-                <div class="col">
-                    <p>Sex: {{profile.sex}}</p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
-                    <p>Last name: {{profile.last_name}}</p>
-                </div>
-
-                <div class="col">
-                    <p>Contact number: {{profile.contact_number}}</p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
-                    <p>Birthday: {{profile.birthdate}}</p>
-                </div>
-
-            </div>
+            
         </div>
 
         <br/>
         <br/>
         <br/>
         
-        <div>
-        <h5> {{profile.first_name}} {{profile.last_name}}'s Documents </h5>
+        <div class="card rounded-3" style="width: 75rem; margin:auto;">
+            <div class="card-body">
+                <h5 style="text-align:center;"> {{profile.first_name}} {{profile.last_name}}'s Documents </h5>
             {% for d in profile.patient.documents.all %}
                 <p>{{d.file}} <a href="{{d.file.url}}" target="_blank">Download document</a></p>
             {% empty %}
                 <p> No documents </p>
             {% endfor %}
+            </div>
         </div>
 
         <br/>
         <br/>
         <br/>
 
-        <div>
-        <h5> {{profile.first_name}} {{profile.last_name}}'s Prescriptions </h5>
-            {% for p in profile.patient.prescription.all %}
-                <p>{{p.file}} <a href="{{p.file.url}}" target="_blank">Download prescription</a></p>
-            {% empty %}
-                <p> No prescriptions </p>
-            {% endfor %}
+        <div class="card rounded-3" style="width: 75rem; margin:auto;">
+            <div class="card-body">
+                <h5 style="text-align:center;"> {{profile.first_name}} {{profile.last_name}}'s Prescriptions </h5>
+                {% for p in profile.patient.prescription.all %}
+                    <p>{{p.file}} <a href="{{p.file.url}}" target="_blank">Download prescription</a></p>
+                {% empty %}
+                    <p> No prescriptions </p>
+                {% endfor %}
+            </div>
         </div>
 
         <br/>
