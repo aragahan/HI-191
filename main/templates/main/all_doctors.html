@@ -40,14 +40,14 @@
                                     <td name="doctorFname">{{doctor.account.first_name}} {{doctor.account.last_name}} </td>
                                     <td>
                                         {% if doctor.specialization != null %}
-                                        {{physicians.specialization}}
+                                        {{doctor.specialization}}
                                         {% else %}
                                         Not Specified
                                         {% endif %}
                                     </td>
                                     <td>
                                         {% if doctor.hospital_affiliation != null %}
-                                        {{physicians.hospital_affiliation}}
+                                        {{doctor.hospital_affiliation}}
                                         {% else %}
                                         Not Specified
                                         {% endif %}
