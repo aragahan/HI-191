@@ -1,0 +1,127 @@
+{% extends 'main/base.html' %}
+
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+    {% load crispy_forms_tags %}
+
+    <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>{% block title %}{% endblock title %}</title>
+</head>
+
+<body class="h-100">
+    <div class="d-flex flex-column h-100">
+        {% block navbar %}
+            {% include 'main/navbar.html' %}
+        {% endblock navbar %}
+        {% block content %}
+        
+        <h1>{{profile.first_name}}'s Profile </h1>
+
+        <br/>
+
+        <div class="card rounded-3" style="width: 75rem; margin:auto;">
+            <div class="card-body">
+                <div class="row">
+                    <h5 style="text-align:center;"> {{profile.first_name}} {{profile.last_name}}'s Personal Details </h5>
+                    <div class="col">
+                        <p>Email: {{profile.email}}</p>
+                    </div>
+    
+                    <div class="col">
+                        <p>Age: {{profile.age}}</p>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="col">
+                        <p>First name: {{profile.first_name}}</p>
+                    </div>
+    
+                    <div class="col">
+                        <p>Sex: {{profile.sex}}</p>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="col">
+                        <p>Last name: {{profile.last_name}}</p>
+                    </div>
+    
+                    <div class="col">
+                        <p>Contact number: {{profile.contact_number}}</p>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="col">
+                        <p>Birthday: {{profile.birthdate}}</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <br/>
+        <br/>
+        <br/>
+        
+        <div class="card rounded-3" style="width: 75rem; margin:auto;">
+            <div class="card-body">
+                <h5 style="text-align:center;"> {{profile.first_name}} {{profile.last_name}}'s Documents </h5>
+            {% for d in profile.patient.documents.all %}
+                <p>{{d.file}} <a href="{{d.file.url}}" target="_blank">Download document</a></p>
+            {% empty %}
+                <p> No documents </p>
+            {% endfor %}
+            </div>
+        </div>
+
+        <br/>
+        <br/>
+        <br/>
+
+        <div class="card rounded-3" style="width: 75rem; margin:auto;">
+            <div class="card-body">
+                <h5 style="text-align:center;"> {{profile.first_name}} {{profile.last_name}}'s Prescriptions </h5>
+                {% for p in profile.patient.prescription.all %}
+                    <p>{{p.file}} <a href="{{p.file.url}}" target="_blank">Download prescription</a></p>
+                {% empty %}
+                    <p> No prescriptions </p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <br/>
+        <br/>
+        <br/>
+
+        <div class="card rounded-3" style="width: 75rem; margin: auto;">
+            <div class="card-body">
+                {% if profile.role == "PA" %}
+                    <h5>Document Upload</h5>
+                    <form method = "POST" action = "" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{dform.file | as_crispy_field}}
+                        <button type = "Submit"> Submit </button>
+                    </form>
+                    {% elif profile.role == "PH" %}
+                    <h5>Edit Details</h5>
+                    <form method = "POST" action = "">
+                        {% csrf_token %}
+                        {{pform.specialization | as_crispy_field}}
+                        {{pform.hospital_affiliation | as_crispy_field}}
+                        <button type = "Submit"> Submit </button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+
+        {% endblock content %}
+    </div>
+</body>
+</html>
