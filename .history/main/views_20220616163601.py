@@ -192,6 +192,18 @@ def accounts(request):
     return render(request, "main/accounts.html", data)
 
 
+def md_landing(request):
+    return render(request, "main/md_landing.html", {})
+
+
+def patient_landing(request):
+    return render(request, "main/patient_landing.html", {})
+
+
+def admin_landing(request):
+    return render(request, "main/admin_landing.html", {})
+
+
 def all_doctors_page(request):
     doctors = Physician.objects.all()
 
@@ -310,10 +322,3 @@ def deleteMember(request):
     member.delete()
 
     return JsonResponse('Member was deleted', safe=False)
-
-'''
-def account_requests(request):
-    req_list = Account.objects.filter(is_active = False)
-    context = {'user':request.user, 'list':req_list}
-    return render(request, "main/account_requests.html", context)
-'''

@@ -27,11 +27,16 @@ urlpatterns = [
     # path('md_register/', views.md_register, name='md_register'),
     # path('patient_register/', views.patient_register, name='patient_register'),
     path("profile/", views.profile_page, name="profile_page"),
+    path("md_landing/", views.md_landing, name="md_landing"),
+    path("patient_landing/", views.patient_landing, name="patient_landing"),
     path("doctors/", views.all_doctors_page, name="all_doctors_page"),
     path("patients/", views.all_patients_page, name="all_patients_page"),
     path("patients/<int:id>/", views.patient_page, name="patient_page"),
     
     path('profile/', views.profile_page, name='profile_page'),
+
+    path('md_landing/', views.md_landing, name='md_landing'),
+    path('patient_landing/', views.patient_landing, name='patient_landing'),
 
     path('doctors/', views.all_doctors_page, name="all_doctors_page"),
     path('patients/', views.all_patients_page, name="all_patients_page"),
