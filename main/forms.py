@@ -114,10 +114,10 @@ class RequestAccountForm(ModelForm):
 #         model = AuthUser
 #         fields = ['first_name','last_name','username', 'email', 'password1', 'password2', 'user_type', 'address', 'birthdate', 'contact_no']
 
-# class EditPhysicianForm(ModelForm):
-#     class Meta:
-#         model = Physician
-#         fields = ['specialization', 'hospital_affiliation']
+class EditPhysicianForm(ModelForm):
+    class Meta:
+        model = Physician
+        fields = ['specialization', 'hospital_affiliation']
 
 class DocumentForm(ModelForm):
     class Meta:

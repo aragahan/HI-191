@@ -254,16 +254,23 @@ def patient_page(request, id):
 def profile_page(request):
     profile = request.user
     document_form = DocumentForm()
+    doctor_form = EditPhysicianForm()
 
     if request.method == "POST":
         document_form = DocumentForm(request.POST, request.FILES)
+        doctor_form = EditPhysicianForm(request.POST, instance=profile.physician)
+
         if document_form.is_valid():
             document = document_form.save(False)
             document.patient = profile.patient
             document.save()
             return redirect("profile_page")
 
-    context = {"profile": profile, "dform": document_form}
+        if doctor_form.is_valid():
+            doctor_form.save()
+            return redirect("profile_page")
+
+    context = {"profile": profile, "dform": document_form, "pform": doctor_form}
     return render(request, "main/profile.html", context)
 
 def lobby(request):
