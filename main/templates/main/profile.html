@@ -70,35 +70,33 @@
         <br/>
         <br/>
         
-        <div class="card rounded-3" style="width: 75rem; margin:auto;">
-            <div class="card-body">
-                <h5 style="text-align:center;"> {{profile.first_name}} {{profile.last_name}}'s Documents </h5>
-            {% for d in profile.patient.documents.all %}
-                <p>{{d.file}} <a href="{{d.file.url}}" target="_blank">Download document</a></p>
-            {% empty %}
-                <p> No documents </p>
-            {% endfor %}
-            </div>
-        </div>
-
-        <br/>
-        <br/>
-        <br/>
-
-        <div class="card rounded-3" style="width: 75rem; margin:auto;">
-            <div class="card-body">
-                <h5 style="text-align:center;"> {{profile.first_name}} {{profile.last_name}}'s Prescriptions </h5>
-                {% for p in profile.patient.prescription.all %}
-                    <p>{{p.file}} <a href="{{p.file.url}}" target="_blank">Download prescription</a></p>
+        {% if profile.role == "PA" %}
+            <div class="card rounded-3" style="width: 75rem; margin:auto;">
+                <div class="card-body">
+                    <h5 style="text-align:center;"> {{profile.first_name}} {{profile.last_name}}'s Documents </h5>
+                {% for d in profile.patient.documents.all %}
+                    <p>{{d.file}} <a href="{{d.file.url}}" target="_blank">Download document</a></p>
                 {% empty %}
-                    <p> No prescriptions </p>
+                    <p> No documents </p>
                 {% endfor %}
+                </div>
             </div>
-        </div>
 
-        <br/>
-        <br/>
-        <br/>
+            <br/>
+            <br/>
+            <br/>
+
+            <div class="card rounded-3" style="width: 75rem; margin:auto;">
+                <div class="card-body">
+                    <h5 style="text-align:center;"> {{profile.first_name}} {{profile.last_name}}'s Prescriptions </h5>
+                    {% for p in profile.patient.prescription.all %}
+                        <p>{{p.file}} <a href="{{p.file.url}}" target="_blank">Download prescription</a></p>
+                    {% empty %}
+                        <p> No prescriptions </p>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
 
         <div class="card rounded-3" style="width: 75rem; margin: auto;">
             <div class="card-body">
@@ -107,15 +105,15 @@
                     <form method = "POST" action = "" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{dform.file | as_crispy_field}}
-                        <button type = "Submit"> Submit </button>
+                        <input type = "Submit" value="Submit" name="dform">
                     </form>
-                    {% elif profile.role == "PH" %}
+                {% elif profile.role == "PH" %}
                     <h5>Edit Details</h5>
                     <form method = "POST" action = "">
                         {% csrf_token %}
                         {{pform.specialization | as_crispy_field}}
                         {{pform.hospital_affiliation | as_crispy_field}}
-                        <button type = "Submit"> Submit </button>
+                        <input type = "Submit" value="Submit" name="pform">
                     </form>
                 {% endif %}
             </div>

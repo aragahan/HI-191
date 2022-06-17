@@ -256,7 +256,7 @@ def profile_page(request):
     doctor_form = EditPhysicianForm()
 
     if request.method == "POST":
-        document_form = DocumentForm(request.POST, request.FILES)
+        
         #after being assigned onetoonefield is interchangeable
         if profile.role == "PH":
             doctor_form = EditPhysicianForm(request.POST, instance = profile.physician)
@@ -264,11 +264,13 @@ def profile_page(request):
                 doctor_form.save()
                 return redirect("profile_page")
 
-        if document_form.is_valid():
-            document = document_form.save(False)
-            document.patient = profile.patient
-            document.save()
-            return redirect("profile_page")
+        if profile.role == "PA":       
+            document_form = DocumentForm(request.POST, request.FILES)
+            if document_form.is_valid():              
+                document = document_form.save(False)
+                document.patient = profile.patient
+                document.save()
+                return redirect("profile_page")
 
         
 

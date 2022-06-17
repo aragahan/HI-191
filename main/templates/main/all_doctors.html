@@ -31,7 +31,8 @@
                             <tr>
                                 <th scope="col">Full Name</th>
                                 <th scope="col">Specialization</th>
-                                <th colspan="2" scope="col">Affiliation</th>
+                                <th scope="col">Affiliation</th>
+                                <th scope="col">Contact Number</th>
                             </tr>
                         </thead>	
                         <tbody>
@@ -51,6 +52,10 @@
                                         {% else %}
                                         Not Specified
                                         {% endif %}
+                                    </td>
+
+                                    <td>
+                                        {{doctor.account.contact_number}}
                                     </td>
                                 </tr>
                             {% empty %}
