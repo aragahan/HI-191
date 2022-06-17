@@ -208,9 +208,11 @@ def all_patients_page(request):
     doctor = request.user.physician
     pcr = PatientConsultationRecord.objects.filter(physician=doctor)
     pp = []
-    for p in pcr:
-        if p.patient not in pp:
-            pp.append(p.patient)
+    if pcr.exists():
+        for p in pcr:
+            if p.patient not in pp:
+                pp.append(p.patient)
+
 
     patients = Patient.objects.all()
     
@@ -259,25 +261,38 @@ def profile_page(request):
     profile = request.user
     document_form = DocumentForm()
     doctor_form = EditPhysicianForm()
+    if profile.role == "PH":
+        doctor_form = EditPhysicianForm(instance=profile.physician)
+        if request.method == "POST":
+           doctor_form = EditPhysicianForm(request.POST, instance=profile.physician)
+           if doctor_form.is_valid():
+               doctor_form.save()
+               return redirect("profile_page")
+    elif profile.role == "PA":
+        document_form = DocumentForm()
+        if request.method == "POST":
+           document_form = DocumentForm(request.POST, request.FILES)
+           if document_form.is_valid():              
+               document = document_form.save(False)
+               document.patient = profile.patient
+               document.save()
+               return redirect("profile_page")
 
-    if request.method == "POST":
-        
-        #after being assigned onetoonefield is interchangeable
-        if profile.role == "PH":
-            doctor_form = EditPhysicianForm(request.POST, instance = profile.physician)
-            if doctor_form.is_valid():
-                doctor_form.save()
-                return redirect("profile_page")
+    #if request.method == "POST":
+    #    #after being assigned onetoonefield is interchangeable
+    #    if profile.role == "PH":
+    #        doctor_form = EditPhysicianForm(request.POST, instance=profile.physician)
+    #        if doctor_form.is_valid():
+    #            doctor_form.save()
+    #            return redirect("profile_page")
 
-        if profile.role == "PA":       
-            document_form = DocumentForm(request.POST, request.FILES)
-            if document_form.is_valid():              
-                document = document_form.save(False)
-                document.patient = profile.patient
-                document.save()
-                return redirect("profile_page")
-
-        
+    #    if profile.role == "PA":       
+    #        document_form = DocumentForm(request.POST, request.FILES)
+    #        if document_form.is_valid():              
+    #            document = document_form.save(False)
+    #            document.patient = profile.patient
+    #            document.save()
+    #            return redirect("profile_page")
 
     context = {"profile": profile, "dform": document_form, "pform": doctor_form}
     return render(request, "main/profile.html", context)
