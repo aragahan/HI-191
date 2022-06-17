@@ -4,7 +4,7 @@
 <html lang="en" class="h-100">
     {% load crispy_forms_tags %}
 
-    <head>
+<head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,8 +26,11 @@
 
         <div class="card rounded-3" style="width: 75rem; margin:auto;">
             <div class="card-body">
-                <div class="row">
-                    <h5 style="text-align:center;"> {{profile.first_name}} {{profile.last_name}}'s Personal Details </h5>
+                <div class="row" >
+                <div class="row" >
+                    <h5 style="text-align:center;"><b>{{profile.first_name}} {{profile.last_name}}'s Personal Details</b></h5>
+                    <br/>
+                    <br/>
                     <div class="col">
                         <p>Email: {{profile.email}}</p>
                     </div>
@@ -73,9 +76,19 @@
         {% if profile.role == "PA" %}
             <div class="card rounded-3" style="width: 75rem; margin:auto;">
                 <div class="card-body">
-                    <h5 style="text-align:center;"> {{profile.first_name}} {{profile.last_name}}'s Documents </h5>
+                    <h5 style="text-align:center;"><b>{{profile.first_name}} {{profile.last_name}}'s Documents</b></h5>
+                    <br/>
+                    <br/>
                 {% for d in profile.patient.documents.all %}
-                    <p>{{d.file}} <a href="{{d.file.url}}" target="_blank">Download document</a></p>
+                    <div class="row" style="text-align:center;">
+                        <div class="col">
+                            <p>{{d.file}}</p>
+                        </div>
+
+                        <div class = "col">
+                            <a href="{{d.file.url}}" target="_blank">Download document</a>
+                        </div>
+                    </div>
                 {% empty %}
                     <p> No documents </p>
                 {% endfor %}
@@ -88,9 +101,19 @@
 
             <div class="card rounded-3" style="width: 75rem; margin:auto;">
                 <div class="card-body">
-                    <h5 style="text-align:center;"> {{profile.first_name}} {{profile.last_name}}'s Prescriptions </h5>
+                    <h5 style="text-align:center;"><b>{{profile.first_name}} {{profile.last_name}}'s Prescriptions</b></h5>
+                    <br/>
+                    <br/>
                     {% for p in profile.patient.prescription.all %}
-                        <p>{{p.file}} <a href="{{p.file.url}}" target="_blank">Download prescription</a></p>
+                        <div class="row" style="text-align:center;">
+                            <div class="col">
+                                <p>{{p.file}}</p>
+                            </div>
+                            <div class = "col">
+                                <a href="{{p.file.url}}" target="_blank">Download prescription</a>
+                            </div>
+                        </div>
+                        
                     {% empty %}
                         <p> No prescriptions </p>
                     {% endfor %}
@@ -98,10 +121,15 @@
             </div>
         {% endif %}
 
+        <br/>
+        <br/>
+        <br/>
+
         <div class="card rounded-3" style="width: 75rem; margin: auto;">
             <div class="card-body">
                 {% if profile.role == "PA" %}
                     <h5>Document Upload</h5>
+                    <br/>
                     <form method = "POST" action = "" enctype="multipart/form-data">
                         {% csrf_token %}
                         {{dform.file | as_crispy_field}}
@@ -109,6 +137,7 @@
                     </form>
                 {% elif profile.role == "PH" %}
                     <h5>Edit Details</h5>
+                    <br/>
                     <form method = "POST" action = "">
                         {% csrf_token %}
                         {{pform.specialization | as_crispy_field}}

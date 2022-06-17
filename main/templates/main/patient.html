@@ -22,6 +22,7 @@
         {% block content %}
         <div>
             <h1> {{patient.account.first_name}} {{patient.account.last_name}}'s Patient Information</h1>
+            <br/>
             <div class="card rounded-3" style="width: 75rem; margin:auto;">
                 <div class="card-body">
                     <div class="row">
@@ -62,9 +63,19 @@
         <br/>
         <div class="card rounded-3" style="width: 75rem; margin:auto;">
             <div class="card-body">
-                <h5> {{patient.account.first_name}} {{patient.account.last_name}}'s Documents </h5>
+                <h5 style="text-align:center;"><b>{{patient.account.first_name}} {{patient.account.last_name}}'s Documents</b></h5>
+                <br/>
+                <br/>
                     {% for d in patient.documents.all %}
-                        <p>{{d.file}} <a href="{{d.file.url}}" target="_blank">Download document</a></p>
+                    <div class = "row" style="text-align:center;">
+                        <div class="col">
+                            <p>{{d.file}}</p>
+                        </div>
+                        <div class="col">
+                            <a href="{{d.file.url}}" target="_blank">Download document</a>
+                        </div>
+                    </div>    
+                    
                     {% empty %}
                         <p> No documents </p>
                     {% endfor %}
@@ -76,12 +87,24 @@
 
         <div class="card rounded-3" style="width: 75rem; margin:auto;">
             <div class="card-body">
-                <h5> {{patient.account.first_name}} {{patient.account.last_name}}'s Prescriptions </h5>
+                <h5 style="text-align:center;"><b>{{patient.account.first_name}} {{patient.account.last_name}}'s Prescriptions</b></h5>
+                <br/>
+                <br/>
                     {% for p in patient.prescription.all %}
-                        <p>{{p.file}} <a href="{{p.file.url}}" target="_blank">Download prescription</a></p>
+                    <div class = "row" style="text-align:center;">
+                        <div class="col">
+                            <p>{{p.file}}</p>
+                        </div>
+                        <div class="col">
+                            <a href="{{p.file.url}}" target="_blank">Download prescription</a>
+                        </div>
+                    </div>    
+                        
                     {% empty %}
                         <p> No prescriptions </p>
                     {% endfor %}
+                    <br/>
+                    <br/>
                 {% if profile.role == "PH" %}
                     <h6> Upload Prescription </h6>
                     <form method = "POST" action = "" enctype="multipart/form-data">
@@ -98,20 +121,44 @@
         <br/>
         <div class="card rounded-3" style="width: 75rem; margin:auto;">
             <div class="card-body">
-                <h5> {{patient.account.first_name}} {{patient.account.last_name}}'s Consultation History </h5>
+                <h5 style="text-align:center;"><b>{{patient.account.first_name}} {{patient.account.last_name}}'s Consultation History</b></h5>
+                <br/>
+                <div class="row" style="text-align:center;">
+                    <div class="col">
+                        <h5><b>Physician Name</b></h5>
+                    </div>
+                    <div class="col">
+                        <h5><b>Date</b></h5>
+                    </div>
+                    <div class="col">
+                        <h5><b>Status</b></h5>
+                    </div>
+                </div>
+
                 {% for cr in patient.PCR.all %}
-                    <p>
-                        {{cr.physician}}
-                        {{cr.date}}
+                    <div class = "row" style="text-align:center;">
+                        <div class = "col">
+                            {{cr.physician}}
+                        </div>
+                        <div class = "col">
+                            {{cr.date}}
+                        </div>
                         {% if cr.status == "DN" %}
-                            Done
+                        <div class = "col">
+                            <p>Done</p>
+                        </div>
                         {% else %}
-                            Upcoming
+                        <div class = "col">
+                            <p>Upcoming</p>
+                        </div>
                         {% endif %}
-                        </p>
+                    </div>
+                    
                 {% empty %}
                     <p> No Consultation History </p>
                 {% endfor %}
+                <br/>
+                <br/>
                 {% if profile.role == "PH" %}
                     <h6> Add Consultation History </h6>
                     <form method = "POST" action = "">
