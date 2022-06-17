@@ -79,6 +79,14 @@
                     <h5 style="text-align:center;"><b>{{profile.first_name}} {{profile.last_name}}'s Documents</b></h5>
                     <br/>
                     <br/>
+                <div class = "row" style="text-align:center;">
+                    <div class = "col">
+                        <h5><b>File Name</b></h5>
+                    </div>
+                    <div class = "col">
+                        <h5><b>Download Link</b></h5>
+                    </div>
+                </div>
                 {% for d in profile.patient.documents.all %}
                     <div class="row" style="text-align:center;">
                         <div class="col">
@@ -104,6 +112,14 @@
                     <h5 style="text-align:center;"><b>{{profile.first_name}} {{profile.last_name}}'s Prescriptions</b></h5>
                     <br/>
                     <br/>
+                    <div class = "row" style="text-align:center;">
+                        <div class = "col">
+                            <h5><b>File Name</b></h5>
+                        </div>
+                        <div class = "col">
+                            <h5><b>Download Link</b></h5>
+                        </div>
+                    </div>
                     {% for p in profile.patient.prescription.all %}
                         <div class="row" style="text-align:center;">
                             <div class="col">
