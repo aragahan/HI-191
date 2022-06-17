@@ -104,18 +104,18 @@ def request_account_sent(request):
 # def reset_password(request):
 #     return render(request)
 
-
+@unauthenticated_user
 def logout_user(request):
     logout(request)
     return redirect("/")
 
-
+@unauthenticated_user
 def account_requests(request):
     account_requests = AccountRequest.objects.all()
     data = {"account_requests": account_requests}
     return render(request, "main/account_requests.html", data)
 
-
+@unauthenticated_user
 def account_request_approve(request, pk):
     account_request = AccountRequest.objects.get(pk=pk)
     get_pass = re.search(r"\w+(?=@)", account_request.email).group()
@@ -162,7 +162,7 @@ def account_request_approve(request, pk):
 
     return redirect("/account_requests/")
 
-
+@unauthenticated_user
 def account_request_deny(request, pk):
     account_request = AccountRequest.objects.get(pk=pk)
     subject = "Telemedicine App - Re: Account Request"
@@ -183,27 +183,27 @@ def account_request_deny(request, pk):
     # Send email here
     return redirect("/account_requests/")
 
-
+@unauthenticated_user
 def change_is_active(request, pk):
     account = Account.objects.get(pk=pk)
     account.is_active = not account.is_active
     account.save()
     return redirect("/accounts/")
 
-
+@unauthenticated_user
 def accounts(request):
     accounts_list = Account.objects.all()
     data = {"accounts_list": accounts_list}
     return render(request, "main/accounts.html", data)
 
-
+@unauthenticated_user
 def all_doctors_page(request):
     doctors = Physician.objects.all()
 
     context = {"doctors": doctors}
     return render(request, "main/all_doctors.html", context)
 
-
+@unauthenticated_user
 def all_patients_page(request):
     doctor = request.user.physician
     pcr = PatientConsultationRecord.objects.filter(physician=doctor)
@@ -212,7 +212,7 @@ def all_patients_page(request):
     context = {"pcr": pcr}
     return render(request, "main/all_patients.html", context)
 
-
+@unauthenticated_user
 def patient_page(request, id):
     patient = Patient.objects.get(id=id)
     profile = request.user
@@ -245,7 +245,7 @@ def patient_page(request, id):
     }
     return render(request, "main/patient.html", context)
 
-
+@unauthenticated_user
 def profile_page(request):
     profile = request.user
     document_form = DocumentForm()
@@ -269,15 +269,15 @@ def profile_page(request):
     context = {"profile": profile, "dform": document_form, "pform": doctor_form}
     return render(request, "main/profile.html", context)
 
-
+@unauthenticated_user
 def lobby(request):
     return render(request, "main/lobby.html")
 
-
+@unauthenticated_user
 def room(request):
     return render(request, "main/room.html")
 
-
+@unauthenticated_user
 def getToken(request):
     appId = "ab463b2c13cc40279dd71e7181ba55af"
     appCertificate = "74b688a4e2ab4d5895b987e4eabadcef"
@@ -293,7 +293,7 @@ def getToken(request):
     )
     return JsonResponse({"token": token, "uid": uid}, safe=False)
 
-
+@unauthenticated_user
 @csrf_exempt
 def createMember(request):
     data = json.loads(request.body)
@@ -304,7 +304,7 @@ def createMember(request):
 
     return JsonResponse({"name": data["name"]}, safe=False)
 
-
+@unauthenticated_user
 def getMember(request):
     uid = request.GET.get("UID")
     room_name = request.GET.get("room_name")
@@ -317,7 +317,7 @@ def getMember(request):
     name = member.name
     return JsonResponse({"name": member.name}, safe=False)
 
-
+@unauthenticated_user
 @csrf_exempt
 def deleteMember(request):
     data = json.loads(request.body)
