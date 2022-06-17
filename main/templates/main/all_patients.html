@@ -19,7 +19,7 @@
         <div class="container h-100 my-5">
             <div class="row">
                 <div class="col">
-                    <h1>Patients Registered Under Your Care</h1>
+                    <h1>Patients Registered</h1>
                     <div class="input-group my-3">
                         <span class="input-group-text">
                             <i class="fa-solid fa-magnifying-glass"></i>
@@ -37,20 +37,20 @@
                             </tr>
                         </thead>	
                         <tbody>
-                            {% for p in pcr %}
+                            {% for patient in patients %}
                                 <tr name="results" class="align-middle">
-                                    <td name="patientFname">{{patient.account.first_name}} {{p.patient.account.last_name}}</td>
+                                    <td name="patientFname">{{patient.account.first_name}} {{patient.account.last_name}}</td>
                                     <td>
-                                        {{p.patient.account.age}}
+                                        {{patient.account.age}}
                                     </td>
                                     <td>
-                                        {{p.patient.account.sex}}
+                                        {{patient.account.sex}}
                                     </td>
                                     <td>
-                                        {{p.patient.account.contact_number}}
+                                        {{patient.account.contact_number}}
                                     </td>
                                     <td>
-                                        <a href="{% url 'patient_page' p.patient.id %}">View Patient Profile</a>
+                                        <a href="{% url 'patient_page' patient.id %}">View Patient Profile</a>
                                     </td>
                                 </tr>
                             {% empty %}

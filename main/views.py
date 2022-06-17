@@ -207,9 +207,10 @@ def all_doctors_page(request):
 def all_patients_page(request):
     doctor = request.user.physician
     pcr = PatientConsultationRecord.objects.filter(physician=doctor)
+    patients = Patient.objects.all()
     
 
-    context = {"pcr": pcr}
+    context = {"pcr": pcr, "patients": patients}
     return render(request, "main/all_patients.html", context)
 
 @login_required(login_url="login")
@@ -220,22 +221,25 @@ def patient_page(request, id):
     pcr_form = PatientConsultationRecordForm()
 
     if request.method == "POST":
-        prescription_form = PrescriptionForm(request.POST, request.FILES)
-        pcr_form = PatientConsultationRecordForm(request.POST)
+        if 'pform' in request.POST:
+            prescription_form = PrescriptionForm(request.POST, request.FILES)
 
-        if prescription_form.is_valid():
-            prescription = prescription_form.save(False)
-            prescription.patient = patient
-            prescription.physician = profile.physician
-            prescription.save()
-            return redirect("patient_page", patient.id)
+            if prescription_form.is_valid():
+                prescription = prescription_form.save(False)
+                prescription.patient = patient
+                prescription.physician = profile.physician
+                prescription.save()
+                return redirect("patient_page", patient.id)
 
-        if pcr_form.is_valid():
-            pcr = pcr_form.save(False)
-            pcr.patient = patient
-            pcr.physician = profile.physician
-            pcr.save()
-            return redirect("patient_page", patient.id)
+        elif 'pcr' in request.POST:
+            pcr_form = PatientConsultationRecordForm(request.POST)
+
+            if pcr_form.is_valid():
+                pcr = pcr_form.save(False)
+                pcr.patient = patient
+                pcr.physician = profile.physician
+                pcr.save()
+                return redirect("patient_page", patient.id)
 
     context = {
         "patient": patient,
@@ -254,7 +258,11 @@ def profile_page(request):
     if request.method == "POST":
         document_form = DocumentForm(request.POST, request.FILES)
         #after being assigned onetoonefield is interchangeable
-        doctor_form = EditPhysicianForm(request.POST, instance = profile.physician)
+        if profile.role == "PH":
+            doctor_form = EditPhysicianForm(request.POST, instance = profile.physician)
+            if doctor_form.is_valid():
+                doctor_form.save()
+                return redirect("profile_page")
 
         if document_form.is_valid():
             document = document_form.save(False)
@@ -262,9 +270,7 @@ def profile_page(request):
             document.save()
             return redirect("profile_page")
 
-        if doctor_form.is_valid():
-            doctor_form.save()
-            return redirect("profile_page")
+        
 
     context = {"profile": profile, "dform": document_form, "pform": doctor_form}
     return render(request, "main/profile.html", context)

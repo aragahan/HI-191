@@ -38,8 +38,8 @@ urlpatterns = [
 
     path('patients/<int:id>/', views.patient_page, name="patient_page"),
 
-    path('lobby/', views.lobby),
-    path('room/', views.room),
+    path('lobby/', views.lobby, name="lobby"),
+    path('room/', views.room, name="room"),
 
     path('get_token/', views.getToken),
     path('create_member/', views.createMember),

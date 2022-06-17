@@ -82,6 +82,14 @@
                     {% empty %}
                         <p> No prescriptions </p>
                     {% endfor %}
+                {% if profile.role == "PH" %}
+                    <h6> Upload Prescription </h6>
+                    <form method = "POST" action = "" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <p> {{pform.file | as_crispy_field}} </p>   
+                        <input type = "Submit" value="Submit" name="pform">
+                    </form>
+                {% endif %}
             </div>
         </div>
 
@@ -95,11 +103,24 @@
                     <p>
                         {{cr.physician}}
                         {{cr.date}}
-                        {{cr.status}}
-                    </p>
+                        {% if cr.status == "DN" %}
+                            Done
+                        {% else %}
+                            Upcoming
+                        {% endif %}
+                        </p>
                 {% empty %}
                     <p> No Consultation History </p>
                 {% endfor %}
+                {% if profile.role == "PH" %}
+                    <h6> Add Consultation History </h6>
+                    <form method = "POST" action = "">
+                        {% csrf_token %}
+                        <p>{{pcr.date | as_crispy_field}}</p>
+                        <p>{{pcr.status | as_crispy_field}}</p>
+                        <input type="Submit" value="Submit" name="pcr">
+                    </form>
+                {% endif %}
             </div>
         </div>
 

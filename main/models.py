@@ -147,7 +147,8 @@ class PatientConsultationRecord(models.Model):
         Patient, on_delete=models.CASCADE, related_name="PCR", null=True
     )
     physician = models.ForeignKey(Physician, on_delete=models.CASCADE, null=True)
-    date = models.DateTimeField(auto_now_add=False, null=True, blank=True)
+    date = models.DateField(auto_now_add=False, null=True, blank=True)
+    status = models.CharField(choices=STATUS, max_length=200,blank=True, null=True)
 
 
 class Prescription(models.Model):
