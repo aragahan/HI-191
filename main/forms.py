@@ -136,3 +136,14 @@ class PatientConsultationRecordForm(ModelForm):
     class Meta:
         model = PatientConsultationRecord
         fields = ["date", "status"]
+        widgets = {
+            "date": DateInput(
+                attrs={
+                    "type": "date",
+                    "class": "form-control",
+                    "id": "birthdate",
+                    "placeholder": "mm/dd/yyyy",
+                    "required": True,
+                }
+            ),
+        }
