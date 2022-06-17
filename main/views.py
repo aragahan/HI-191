@@ -207,10 +207,14 @@ def all_doctors_page(request):
 def all_patients_page(request):
     doctor = request.user.physician
     pcr = PatientConsultationRecord.objects.filter(physician=doctor)
+    pp = []
+    for p in pcr:
+        pp.append(p.patient)
+
     patients = Patient.objects.all()
     
 
-    context = {"pcr": pcr, "patients": patients}
+    context = {"pcr": pp, "patients": patients}
     return render(request, "main/all_patients.html", context)
 
 @login_required(login_url="login")
