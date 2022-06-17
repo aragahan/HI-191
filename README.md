@@ -3,23 +3,23 @@ HI 191 Project
 - Create a telemedicine application that would enable a patient to consult with a physician.
 
 ## Patient:
- - [ ]  View information about the application, doctors (name, specialization, hospital affiliations, cellphone) 
+ - [x]  View information about the application, doctors (name, specialization, hospital affiliations, cellphone) 
  - [x]  Register as patient
  - [x]  Login to system
- - [ ]  Consult with doctor via video chat
- - [ ]  Upload documents (ex. patient lab results)
- - [ ]  Download documents (ex. prescriptions, lab requests)
+ - [x]  Consult with doctor via video chat
+ - [x]  Upload documents (ex. patient lab results)
+ - [x]  Download documents (ex. prescriptions, lab requests)
 
 *Setting of appointment with physician is done via text message to doctor. Patient and Physician should make appointment arrangements via text message*
 
 ## Physician:
- - [ ]  View information about the application, doctors (name, specialization, hospital affiliations) 
+ - [x]  View information about the application, doctors (name, specialization, hospital affiliations) 
  - [x]  Register as physician
  - [x]  Login to system
- - [ ]  Consult with patient via video chat
- - [ ]  View previous consultations of patients under his care
- - [ ]  Add new patient consultation record
- - [ ]  View or download uploaded documents (ex. patient lab results) 
+ - [x]  Consult with patient via video chat
+ - [x]  View previous consultations of patients under his care
+ - [x]  Add new patient consultation record
+ - [x]  View or download uploaded documents (ex. patient lab results) 
  - [ ]  Upload prescription
 
 ## System Administrator:
