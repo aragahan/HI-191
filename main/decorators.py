@@ -7,11 +7,11 @@ def unauthenticated_user(view_func):
             if request.user.role == "SA":
                 return redirect("/account_requests/")
             elif request.user.role == "PH":
-                return redirect("/account_requests/")
+                return redirect("/all_patients/")
             elif request.user.role == "PA":
-                return redirect("/account_requests/")
-            else:
-                return view_func(request, *args, **kwargs)
+                return redirect("/all_doctors/")
+            # else:
+            #     return view_func(request, *args, **kwargs)
         else:
             return view_func(request, *args, **kwargs)
 
