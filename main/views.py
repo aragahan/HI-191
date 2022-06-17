@@ -209,7 +209,8 @@ def all_patients_page(request):
     pcr = PatientConsultationRecord.objects.filter(physician=doctor)
     pp = []
     for p in pcr:
-        pp.append(p.patient)
+        if p.patient not in pp:
+            pp.append(p.patient)
 
     patients = Patient.objects.all()
     
