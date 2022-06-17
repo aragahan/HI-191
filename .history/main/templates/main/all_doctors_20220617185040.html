@@ -56,6 +56,7 @@
                 </table>			
             </div>
         </div>
+<<<<<<< HEAD
         <script>
             function search() {
                 console.log(document.querySelector("#filter").value)
@@ -72,12 +73,28 @@
                     }
                 }
             }
-<<<<<<< HEAD
-        }
-    </script>
-    {% endblock content %}
-=======
         </script>
     
         {% endblock content %}
->>>>>>> 0128fdead503caf462138d242e5942335e1b57ca
+=======
+    </div>
+        
+    <script>
+        function search() {
+            console.log(document.querySelector("#filter").value)
+            let filter = document.getElementById("filter").value.toUpperCase();
+            let results = document.getElementsByName("results");
+            if (results !== null) {
+                for (let i=0; i<(results.length); i++) {
+                    let name = results[i].querySelector("[name=doctorFname]").innerText;
+                    if (name.toUpperCase().includes(filter)){
+                        results[i].style.display = "";
+                    } else {
+                        results[i].style.display = "none";
+                    } 
+                }
+            }
+        }
+    </script>
+        {% endblock content %}
+>>>>>>> 7e036bd8005c166056a834b38a51d825d186d2e3
