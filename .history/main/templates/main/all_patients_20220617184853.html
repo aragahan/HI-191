@@ -81,7 +81,11 @@
             let results = document.getElementsByName("results-1");
             if (results !== null) {
                 for (let i=0; i<(results.length); i++) {
+<<<<<<< HEAD
+                    let name = results[i].querySelector('[name=patientFname]').innerText;
+=======
                     let name = results[i].querySelector("[name=patientFname-1]").innerText;
+>>>>>>> 7e036bd8005c166056a834b38a51d825d186d2e3
                     if (name.toUpperCase().includes(filter)){
                         results[i].style.display = "";
                     } else {
@@ -90,6 +94,12 @@
                 }
             }
         }
+<<<<<<< HEAD
+    </script>
+
+        {% endblock content %}
+=======
+>>>>>>> 7e036bd8005c166056a834b38a51d825d186d2e3
 
         function search2() {
             console.log(document.querySelector("#filter-2").value)
