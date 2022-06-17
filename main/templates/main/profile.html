@@ -21,7 +21,7 @@
         {% block content %}
         
         <h1>{{profile.first_name}}'s Profile </h1>
-
+		<span class="w-0 mx-auto px-3 badge rounded-pill">{{profile.get_role_display}}</span>
         <br/>
 
         <div class="card rounded-3" style="width: 75rem; margin:auto;">
