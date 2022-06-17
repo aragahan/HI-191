@@ -26,33 +26,32 @@
             <div class="card rounded-3" style="width: 75rem; margin:auto;">
                 <div class="card-body">
                     <div class="row">
-                        <h5 style="text-align:center;"><b>{{profile.first_name}} {{profile.last_name}}'s Personal Details</b></h5>
                         <div class="col">
-                            <p><b> First name </b><br> {{patient.account.first_name}}</p>
+                            <p> <b> First name: </b><br> {{patient.account.first_name}}</p>
                         </div>
 
                         <div class="col">
-                            <p><b> Age </b><br> {{patient.account.age}}</p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col">
-                            <p><b> Last name </b><br> {{patient.account.last_name}}</p>
-                        </div>
-
-                        <div class="col">
-                            <p><b> Sex </b><br> {{patient.account.sex}}</p>
+                            <p>Age: {{patient.account.age}}</p>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col">
-                            <p><b> Birthdate </b><br> {{patient.account.birthdate}}</p>
+                            <p>Last name: {{patient.account.last_name}}</p>
                         </div>
 
                         <div class="col">
-                            <p><b> Contact number </b><br> {{patient.account.contact_number}}</p>
+                            <p>Sex: {{patient.account.sex}}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <p>Birthday: {{patient.account.birthdate}}</p>
+                        </div>
+
+                        <div class="col">
+                            <p>Contact number: {{patient.account.contact_number}}</p>
                         </div>
                     </div>
                 </div>
@@ -145,7 +144,7 @@
                         <h5><b>Physician Name</b></h5>
                     </div>
                     <div class="col">
-                        <h5><b>Date</b></h5>
+                        <h5><b>Date (MM/DD/YYYY)</b></h5>
                     </div>
                     <div class="col">
                         <h5><b>Status</b></h5>
@@ -155,7 +154,7 @@
                 {% for cr in patient.PCR.all %}
                     <div class = "row" style="text-align:center;">
                         <div class = "col">
-                            {{cr.physician.first_name}} {{cr.physician.last_name}}
+                            {{cr.physician}}
                         </div>
                         <div class = "col">
                             {{cr.date}}

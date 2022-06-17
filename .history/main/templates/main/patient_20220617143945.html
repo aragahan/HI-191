@@ -26,7 +26,6 @@
             <div class="card rounded-3" style="width: 75rem; margin:auto;">
                 <div class="card-body">
                     <div class="row">
-                        <h5 style="text-align:center;"><b>{{profile.first_name}} {{profile.last_name}}'s Personal Details</b></h5>
                         <div class="col">
                             <p><b> First name </b><br> {{patient.account.first_name}}</p>
                         </div>
@@ -155,7 +154,7 @@
                 {% for cr in patient.PCR.all %}
                     <div class = "row" style="text-align:center;">
                         <div class = "col">
-                            {{cr.physician.first_name}} {{cr.physician.last_name}}
+                            {{cr.physician}}
                         </div>
                         <div class = "col">
                             {{cr.date}}

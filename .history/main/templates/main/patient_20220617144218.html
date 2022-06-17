@@ -155,7 +155,7 @@
                 {% for cr in patient.PCR.all %}
                     <div class = "row" style="text-align:center;">
                         <div class = "col">
-                            {{cr.physician.first_name}} {{cr.physician.last_name}}
+                            {{cr.physician}}
                         </div>
                         <div class = "col">
                             {{cr.date}}
